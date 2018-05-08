@@ -14,8 +14,10 @@ public:
 	Bin(const Bin &origin);
 	~Bin();
 
-	int capacity() const;
-	int length() const;
+	bool addOperation(const Operation& op); //push operation to last place in list
+	int remainingSize(); //return size - all operation times schedules
+	void emptyBin(); //empty list
+	bool resize(int _size); //change size of bin, return true or false if possible when decreasing size 
 
 	Bin& operator=(const Bin& origin);
 	bool operator==(const Bin& origin) = delete;
