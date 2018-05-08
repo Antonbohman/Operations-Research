@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <windows.h>
+#include <ctime>
 
 #include "Bin.h"
 #include "PriorityQueue.h"
@@ -10,13 +11,13 @@ using namespace std;
 
 bool readFromFile(const string filename, PriorityQueue<Operation>* que);
 
-void nextFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms, int& totalTime, int& totalOperation, int& bookedTime, int& bookedOperation);
-void firstFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms, int& totalTime, int& totalOperation, int& bookedTime, int& bookedOperation);
-void bestFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms, int& totalTime, int& totalOperation, int& bookedTime, int& bookedOperation);
+void nextFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms, int& totalTime, int& totalOperation, int& bookedTime, int& bookedOperation, clock_t& processTime);
+void firstFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms, int& totalTime, int& totalOperation, int& bookedTime, int& bookedOperation, clock_t& processTime);
+void bestFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms, int& totalTime, int& totalOperation, int& bookedTime, int& bookedOperation, clock_t& processTime);
 
 string intToTime(const int time);
 void printSchedule(const int amountRooms, const Bin* rooms);
-void printEffectivity(const int totalTime, const int totalOperation, const int& bookedTime, const int bookedOperation);
+void printEffectivity(const int totalTime, const int totalOperation, const int& bookedTime, const int bookedOperation, const clock_t processTime);
 
 /*
 *  main: Starting point
@@ -24,7 +25,8 @@ void printEffectivity(const int totalTime, const int totalOperation, const int& 
 int main() {
 	PriorityQueue<Operation> queue(MAX_HEAP);
 
-	int totalTime, totalOperation, bookedTime, bookedOperation;
+	int totalTime, totalOperation, bookedTime, bookedOperation; 
+	clock_t processTime;
 
 	int amountRooms = 0;
 	Bin* rooms;
@@ -38,11 +40,11 @@ int main() {
 			rooms[i].resize(60 * 11);	//8.00 - 19.00 (11 hours)
 		}
 
-		nextFit(queue, amountRooms, rooms, totalTime, totalOperation, bookedTime, bookedOperation);
+		nextFit(queue, amountRooms, rooms, totalTime, totalOperation, bookedTime, bookedOperation, processTime);
 
 		cout << "\tTest 1 - Operationer_1a.txt - Next Fit - Max Heap" << endl << endl;
 		printSchedule(amountRooms, rooms);
-		printEffectivity(totalTime, totalOperation, bookedTime, bookedOperation);
+		printEffectivity(totalTime, totalOperation, bookedTime, bookedOperation, processTime);
 
 		if (readFromFile("Operationer_1a.txt", &queue)) {
 			//reset rooms
@@ -50,11 +52,11 @@ int main() {
 				rooms[i].empty();
 			}
 
-			firstFit(queue, amountRooms, rooms, totalTime, totalOperation, bookedTime, bookedOperation);
+			firstFit(queue, amountRooms, rooms, totalTime, totalOperation, bookedTime, bookedOperation, processTime);
 
 			cout << "\tTest 2 - Operationer_1a.txt - First Fit - Max Heap" << endl << endl;
 			printSchedule(amountRooms, rooms);
-			printEffectivity(totalTime, totalOperation, bookedTime, bookedOperation);
+			printEffectivity(totalTime, totalOperation, bookedTime, bookedOperation, processTime);
 		}
 
 		delete[] rooms;
@@ -71,14 +73,14 @@ int main() {
 			rooms[i+2].resize(60 * 9);	//8.00 - 17.00 (9 hours)
 		}
 
-		firstFit(queue, amountRooms, rooms, totalTime, totalOperation, bookedTime, bookedOperation);
+		firstFit(queue, amountRooms, rooms, totalTime, totalOperation, bookedTime, bookedOperation, processTime);
 
 		cout << "\tTest 3 - Operationer_2.txt - First Fit - Max Heap" << endl << endl;
 		cout << "Monday:" << endl;
 		printSchedule(amountRooms/2, rooms);
 		cout << endl << "Thuesday:" << endl;
 		printSchedule(amountRooms/2, rooms+3);
-		printEffectivity(totalTime, totalOperation, bookedTime, bookedOperation);
+		printEffectivity(totalTime, totalOperation, bookedTime, bookedOperation, processTime);
 
 		delete[] rooms;
 	}
@@ -143,7 +145,9 @@ bool readFromFile(const string filename, PriorityQueue<Operation>* que) {
 /*
 *  nextFit: Fills rooms with operations according to Next Fit algorithm
 */
-void nextFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms, int& totalTime, int& totalOperation, int& bookedTime, int& bookedOperation) {
+void nextFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms, int& totalTime, int& totalOperation, int& bookedTime, int& bookedOperation, clock_t& processTime) {
+	clock_t time;
+
 	Operation curr;
 
 	int currentRoom = 0;
@@ -153,6 +157,7 @@ void nextFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms,
 	bookedTime = 0;
 	bookedOperation = 0;
 
+	time = clock();
 	while (!queue.isEmpty()) {
 		curr = queue.dequeue();
 		totalTime += curr.getTime();
@@ -166,13 +171,16 @@ void nextFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms,
 			}
 		}
 	}
+	processTime = clock() - time;
 }
 
 
 /*
 *  firstFit: Fills rooms with operations according to First Fit algorithm
 */
-void firstFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms, int& totalTime, int& totalOperation, int& bookedTime, int& bookedOperation) {
+void firstFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms, int& totalTime, int& totalOperation, int& bookedTime, int& bookedOperation, clock_t& processTime) {
+	clock_t time;
+
 	Operation curr;
 
 	totalTime = 0;
@@ -180,6 +188,7 @@ void firstFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms
 	bookedTime = 0;
 	bookedOperation = 0;
 
+	time = clock();
 	while (!queue.isEmpty()) {
 		curr = queue.dequeue();
 		totalTime += curr.getTime();
@@ -192,13 +201,16 @@ void firstFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms
 			}
 		}
 	}
+	processTime = clock() - time;
 }
 
 
 /*
 *  bestFit: Fills rooms with operations according to Best Fit algorithm
 */
-void bestFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms, int& totalTime, int& totalOperation, int& bookedTime, int& bookedOperation) {
+void bestFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms, int& totalTime, int& totalOperation, int& bookedTime, int& bookedOperation, clock_t& processTime) {
+	clock_t time;
+	
 	Operation curr;
 
 	totalTime = 0;
@@ -206,6 +218,7 @@ void bestFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms,
 	bookedTime = 0;
 	bookedOperation = 0;
 
+	time = clock();
 	while (!queue.isEmpty()) {
 		curr = queue.dequeue();
 		totalTime += curr.getTime();
@@ -220,6 +233,7 @@ void bestFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms,
 			}
 		}*/
 	}
+	processTime = clock() - time;
 }
 
 
@@ -266,8 +280,9 @@ void printSchedule(const int amountRooms, const Bin* rooms) {
 /*
 *  printEffectivity: Prints effectivity statistics for schedule
 */
-void printEffectivity(const int totalTime, const int totalOperation, const int& bookedTime, const int bookedOperation) {
+void printEffectivity(const int totalTime, const int totalOperation, const int& bookedTime, const int bookedOperation, clock_t processTime) {
 	cout << endl << "Effective Time: " << intToTime(bookedTime) << "/" << intToTime(totalTime) << endl;
 	cout << "Operations: " << bookedOperation << "/" << totalOperation << endl << endl;
+	cout << "Time to process algorithm: " << to_string(((float)processTime)/CLOCKS_PER_SEC) << "ms" << endl << endl;
 	cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
 }
