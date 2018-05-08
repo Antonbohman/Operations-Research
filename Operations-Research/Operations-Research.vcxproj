@@ -115,7 +115,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bin.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Operation.cpp" />
+    <ClCompile Include="utility.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Bin.h" />
+    <ClInclude Include="List.h" />
+    <ClInclude Include="Operation.h" />
+    <ClInclude Include="PriorityQueue.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
