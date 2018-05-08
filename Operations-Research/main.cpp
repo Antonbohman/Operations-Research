@@ -8,11 +8,18 @@
 using namespace std;
 
 bool readFromFile(const string filename, PriorityQueue<Operation>* que);
+void printSchedule(const int amountRooms, const Bin* rooms, const int totalTime, const int totalOperation, const int bookedOperation);
 
+/*
+*  main: Starting point
+*/
 int main() {
 	PriorityQueue<Operation> queue(MAX_HEAP);
+	int totalTime = 0;
+	int totalOperation = 0;
+	int bookedOperation = 0;
 
-	if (readFromFile("Operationer_2.txt", &queue)) {
+	if (readFromFile("Operationer_1b.txt", &queue)) {
 		int amountRooms = 3;
 		Bin* rooms = new Bin[amountRooms];
 
@@ -26,25 +33,17 @@ int main() {
 		//First fit (osäker på rätt namn)
 		while (!queue.isEmpty()) {
 			curr = queue.dequeue();
+			totalTime += curr.getTime();
+			totalOperation++;
 			for (int i = 0; i < amountRooms; i++) {
 				if (rooms[i].addOperation(curr)) {
 					i = amountRooms;	//break
+					bookedOperation++;
 				}
 			}
 		}
 
-		//print
-		int length = 40;
-
-		for (int i = 0; i < amountRooms; i++) {
-			int scale = (1 - ((float)rooms[i].remainingSize() / rooms[i].maxSize())) * length;
-
-			cout << "Room " << i << "|";
-			for (int x = 0; x < length; x++) {
-				cout << (scale > x ? (char)254u : (char)NULL);
-			}
-			cout << "| " << rooms[i].remainingSize() << "/" << rooms[i].maxSize() << endl;
-		}
+		printSchedule(amountRooms, rooms, totalTime, totalOperation, bookedOperation);
 	}
 
 	getchar();
@@ -101,4 +100,47 @@ bool readFromFile(const string filename, PriorityQueue<Operation>* que) {
 	}
 
 	return !error;
+}
+
+/*
+*  intToTime: Converts minutes to a string with hour and min seperated
+*/
+string intToTime(const int time) {
+	string output = "";
+
+	string hour = to_string(time / 60);
+	if (hour.length() == 1)
+		hour.append("0");
+
+	string min = to_string(time % 60);
+	if (min.length() == 1)
+		min.append("0");
+
+
+	output = hour + "h" + min + "m";
+
+	return output;
+}
+
+/*
+*  printSchedule: Prints schedule for selected rooms
+*/
+void printSchedule(const int amountRooms, const Bin* rooms, const int totalTime, const int totalOperation, const int bookedOperation) {
+	int length = 40;
+	int bookedTime = 0;
+
+	for (int i = 0; i < amountRooms; i++) {
+		int scale = (1 - ((float)rooms[i].remainingSize() / rooms[i].maxSize())) * length;
+
+		cout << "Room " << i << "|";
+		for (int x = 0; x < length; x++) {
+			cout << (scale > x ? (char)254u : (char)NULL);
+		}
+		cout << "| " << intToTime(rooms[i].remainingSize()) << "/" << intToTime(rooms[i].maxSize()) << endl;
+
+		bookedTime += rooms[i].maxSize() - rooms[i].remainingSize();
+	}
+
+	cout << endl << "Effective Time: " << intToTime(bookedTime) << "/" << intToTime(totalTime) << endl;
+	cout << "Operations: " << bookedOperation << "/" << totalOperation << endl;
 }
