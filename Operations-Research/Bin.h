@@ -23,7 +23,8 @@ public:
 	int getTime();
 
 	Bin& operator=(const Bin& origin);
-	Bin& operator==(const Bin& origin);
-	Bin& operator<(const Bin& origin);
-	Bin& operator>(const Bin& origin);
+	Bin& operator==(const Bin& origin) = delete;
+	Bin& operator!=(const Bin& origin) = delete;
+	Bin& operator<(const Bin& origin) = delete;
+	Bin& operator>(const Bin& origin) = delete;
 };
