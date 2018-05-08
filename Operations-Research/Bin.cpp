@@ -26,7 +26,8 @@ bool Bin::addOperation(const Operation & op) {
 int Bin::remainingSize() const {
 	int output = size;
 
-	for (int i = 0; i < schedule.length(); i++) {
+	int length = schedule.length();
+	for (int i = 0; i < length; i++) {
 		output -= schedule.getAt(i).getTime();
 	}
 
@@ -38,7 +39,8 @@ int Bin::maxSize() const {
 }
 
 void Bin::empty() {
-	for (int i = 0; i < schedule.length(); i++) {
+	int length = schedule.length();
+	for (int i = 0; i < length; i++) {
 		schedule.removeAt(0);
 	}
 }
