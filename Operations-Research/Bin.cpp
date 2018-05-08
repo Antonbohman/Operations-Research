@@ -37,7 +37,7 @@ int Bin::maxSize() const {
 	return size;
 }
 
-void Bin::emptyBin() {
+void Bin::empty() {
 	for (int i = 0; i < schedule.length(); i++) {
 		schedule.removeAt(0);
 	}

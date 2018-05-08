@@ -17,7 +17,7 @@ public:
 	bool addOperation(const Operation& op); //push operation to last place in list
 	int remainingSize() const; //return size - all operation times schedules
 	int maxSize() const;
-	void emptyBin(); //empty list
+	void empty(); //empty list
 	bool resize(const int _size); //change size of bin, return true or false if possible when decreasing size 
 
 	Bin& operator=(const Bin& origin);
