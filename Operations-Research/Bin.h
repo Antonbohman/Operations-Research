@@ -14,13 +14,10 @@ public:
 	Bin(const Bin &origin);
 	~Bin();
 
-	void setID(int _id);
-	void setType(string _type);
-	void setTime(int _time);
-
-	int getID();
-	string getType();
-	int getTime();
+	bool addOperation(const Operation& op); //push operation to last place in list
+	int remainingSize(); //return size - all operation times schedules
+	void emptyBin(); //empty list
+	bool resize(int _size); //change size of bin, return true or false if possible when decreasing size 
 
 	Bin& operator=(const Bin& origin);
 	Bin& operator==(const Bin& origin) = delete;
