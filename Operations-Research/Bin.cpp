@@ -31,22 +31,17 @@ int Bin::remainingSize()
 	return output;
 }
 
+int Bin::maxSize()
+{
+	return size;
+}
+
 void Bin::emptyBin()
 {
 	for (int i = 0; i < schedule.length(); i++)
 	{
 		schedule.removeAt(0);
 	}
-}
-
-int Bin::capacity() const
-{
-	return size;
-}
-
-int Bin::length() const
-{
-	return schedule.length();
 }
 
 bool Bin::resize(int _size)
