@@ -40,7 +40,7 @@ int main() {
 
 		nextFit(queue, amountRooms, rooms, totalTime, totalOperation, bookedTime, bookedOperation);
 
-		cout << "Test 1 - Operationer_1a.txt - Next Fit - Max Heap" << endl;
+		cout << "\tTest 1 - Operationer_1a.txt - Next Fit - Max Heap" << endl << endl;
 		printSchedule(amountRooms, rooms);
 		printEffectivity(totalTime, totalOperation, bookedTime, bookedOperation);
 
@@ -52,7 +52,7 @@ int main() {
 
 			firstFit(queue, amountRooms, rooms, totalTime, totalOperation, bookedTime, bookedOperation);
 
-			cout << "Test 2 - Operationer_1a.txt - First Fit - Max Heap" << endl;
+			cout << "\tTest 2 - Operationer_1a.txt - First Fit - Max Heap" << endl << endl;
 			printSchedule(amountRooms, rooms);
 			printEffectivity(totalTime, totalOperation, bookedTime, bookedOperation);
 		}
@@ -73,10 +73,10 @@ int main() {
 
 		firstFit(queue, amountRooms, rooms, totalTime, totalOperation, bookedTime, bookedOperation);
 
-		cout << "Test 3 - Operationer_2.txt - First Fit - Max Heap" << endl;
+		cout << "\tTest 3 - Operationer_2.txt - First Fit - Max Heap" << endl << endl;
 		cout << "Monday:" << endl;
 		printSchedule(amountRooms/2, rooms);
-		cout << "Thuesday:" << endl;
+		cout << endl << "Thuesday:" << endl;
 		printSchedule(amountRooms/2, rooms+3);
 		printEffectivity(totalTime, totalOperation, bookedTime, bookedOperation);
 
@@ -210,6 +210,7 @@ void bestFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms,
 		curr = queue.dequeue();
 		totalTime += curr.getTime();
 		totalOperation++;
+		//Fix algorithm!
 		/*for (int i = currentRoom; i < amountRooms; i++) {
 			currentRoom = i;
 			if (rooms[i].addOperation(curr)) {
@@ -268,4 +269,5 @@ void printSchedule(const int amountRooms, const Bin* rooms) {
 void printEffectivity(const int totalTime, const int totalOperation, const int& bookedTime, const int bookedOperation) {
 	cout << endl << "Effective Time: " << intToTime(bookedTime) << "/" << intToTime(totalTime) << endl;
 	cout << "Operations: " << bookedOperation << "/" << totalOperation << endl << endl;
+	cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
 }
