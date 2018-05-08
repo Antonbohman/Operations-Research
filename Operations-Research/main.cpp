@@ -10,8 +10,9 @@ using namespace std;
 
 bool readFromFile(const string filename, PriorityQueue<Operation>* que);
 
+void nextFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms, int& totalTime, int& totalOperation, int& bookedOperation);
 void firstFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms, int& totalTime, int& totalOperation, int& bookedOperation);
-
+void bestFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms, int& totalTime, int& totalOperation, int& bookedOperation);
 
 string intToTime(const int time);
 void printSchedule(const int amountRooms, const Bin* rooms, const int totalTime, const int totalOperation, const int bookedOperation);
@@ -55,7 +56,7 @@ int main() {
 	}
 
 	if (readFromFile("Operationer_2.txt", &queue)) {
-		amountRooms = 9;
+		amountRooms = 6;
 		rooms = new Bin[amountRooms];
 
 		//create rooms
