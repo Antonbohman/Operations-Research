@@ -1,5 +1,8 @@
 #pragma once
 
+#define MIN_HEAP 0
+#define MAX_HEAP 1
+
 template <typename T>
 class PriorityQueue {
 private:
@@ -24,9 +27,6 @@ private:
 	void swapParent(const int childIndex);
 	void swapChild(const int parentIndex);
 public:
-	static const int LOW = 0;
-	static const int HIGH = 1;
-
 	PriorityQueue(const int heapType = 0);
 	PriorityQueue(const PriorityQueue& origObj);
 	PriorityQueue<T>& operator=(const PriorityQueue& origObj);

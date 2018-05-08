@@ -12,7 +12,7 @@ using namespace std;
 /*
 *  readFromFile: Reads graph information from inputed file
 */
-bool readFromFile(const string filename, PriorityQueue<Operation>* que) {
+bool readFromFile2(const string filename, PriorityQueue<Operation>* que) {
 	bool error = false;
 
 	string read;
