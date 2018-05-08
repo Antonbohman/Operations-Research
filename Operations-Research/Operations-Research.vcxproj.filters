@@ -42,4 +42,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Operationer_2.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Operationer_1a.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Operationer_1b.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>
