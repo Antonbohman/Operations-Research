@@ -14,17 +14,12 @@ public:
 	Bin(const Bin &origin);
 	~Bin();
 
-	void setID(int _id);
-	void setType(string _type);
-	void setTime(int _time);
-
-	int getID();
-	string getType();
-	int getTime();
+	int capacity() const;
+	int length() const;
 
 	Bin& operator=(const Bin& origin);
-	Bin& operator==(const Bin& origin) = delete;
-	Bin& operator!=(const Bin& origin) = delete;
-	Bin& operator<(const Bin& origin) = delete;
-	Bin& operator>(const Bin& origin) = delete;
+	bool operator==(const Bin& origin) = delete;
+	bool operator!=(const Bin& origin) = delete;
+	bool operator<(const Bin& origin) = delete;
+	bool operator>(const Bin& origin) = delete;
 };
