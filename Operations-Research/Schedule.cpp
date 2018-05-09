@@ -193,6 +193,7 @@ void Schedule::bestFit()
 		}
 		if (minIndex != -1) {
 			rooms[minIndex].addOperation(curr);
+			bookedTime += curr.getTime();
 			bookedOperation++;
 		}
 	}
