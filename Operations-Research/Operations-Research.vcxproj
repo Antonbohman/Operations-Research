@@ -118,12 +118,14 @@
     <ClCompile Include="Bin.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Operation.cpp" />
+    <ClCompile Include="Schedule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bin.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Operation.h" />
     <ClInclude Include="PriorityQueue.h" />
+    <ClInclude Include="Schedule.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Operationer_1a.txt" />
