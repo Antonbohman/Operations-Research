@@ -1,6 +1,6 @@
 #include "Schedule.h"
 
-Schedule::Schedule(const PriorityQueue<Operation>& _queue, const int _amountRooms, const int * timeSpan)
+Schedule::Schedule(const PriorityQueue<Operation>& _queue, const int _amountRooms, const int * timeSpan, const int timeSpanLength)
 {
 	datatype = DataType::HEAP;
 	queue = _queue;
@@ -8,11 +8,11 @@ Schedule::Schedule(const PriorityQueue<Operation>& _queue, const int _amountRoom
 	rooms = new Bin[amountRooms];
 	for (int i = 0; i < amountRooms; i++)
 	{
-		rooms[i].resize(timeSpan[i]);
+		rooms[i].resize(timeSpan[i%timeSpanLength]);
 	}
 }
 
-Schedule::Schedule(const List<Operation>& _list, const int _amountRooms, const int * timeSpan)
+Schedule::Schedule(const List<Operation>& _list, const int _amountRooms, const int * timeSpan, const int timeSpanLength)
 {
 	datatype = DataType::LIST;
 	list = _list;
@@ -20,7 +20,7 @@ Schedule::Schedule(const List<Operation>& _list, const int _amountRooms, const i
 	rooms = new Bin[amountRooms];
 	for (int i = 0; i < amountRooms; i++)
 	{
-		rooms[i].resize(timeSpan[i]);
+		rooms[i].resize(timeSpan[i%timeSpanLength]);
 	}
 }
 
@@ -49,13 +49,22 @@ Schedule::~Schedule() {
 	delete[] rooms;
 }
 
-void Schedule::setTitle(const string _title) 
-{
-	title = _title;
-}
-
 void Schedule::fillBins(AlgorithmType type) {
-
+	switch (type) {
+		case AlgorithmType::NEXT_FIT:
+			nextFit();
+			break;
+		case AlgorithmType::FIRST_FIT:
+			firstFit();
+			break;
+		case AlgorithmType::BEST_FIT:
+			bestFit();
+			break;
+		case AlgorithmType::NO_FIT:
+		default:
+			//nothing happends....
+			break;
+	}
 }
 
 void Schedule::printSchedule(const int start, const int end) const {
@@ -87,10 +96,6 @@ void Schedule::printEffectivity() const {
 	cout << "Operations: " << bookedOperation << "/" << totalOperation << endl << endl;
 	cout << "Time to process algorithm: " << to_string(((float)processTime) / CLOCKS_PER_SEC) << "ms" << endl << endl;
 	cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
-}
-
-Schedule & Schedule::operator=(const Schedule & origin) {
-	// TODO: insert return statement here
 }
 
 string Schedule::intToTime(const int time) const {

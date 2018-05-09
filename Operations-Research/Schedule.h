@@ -15,7 +15,6 @@ private:
 		LIST
 	};
 
-	string title;
 	DataType datatype;
 
 	int totalTime, totalOperation, bookedTime, bookedOperation;
@@ -24,7 +23,7 @@ private:
 	PriorityQueue<Operation> queue;
 	List<Operation> list;
 
-	int amountRooms = 0;
+	int amountRooms;
 	Bin* rooms;
 
 	string intToTime(const int time) const;
@@ -41,19 +40,17 @@ public:
 		BEST_FIT
 	};
 
-	Schedule(const PriorityQueue<Operation>& _queue, const int _amountRooms = 0, const int* timeSpan = {}); //ordered operations
-	Schedule(const List<Operation>& _list, const int _amountRooms = 0, const int* timeSpan = {}); //unordered operations
-	Schedule(const Schedule& origin);
+	Schedule(const PriorityQueue<Operation>& _queue, const int _amountRooms = 0, const int* timeSpan = { 0 }, const int timeSpanLength = 1); //ordered operations
+	Schedule(const List<Operation>& _list, const int _amountRooms = 0, const int* timeSpan = { 0 }, const int timeSpanLength = 1); //unordered operations
+	Schedule(const Schedule& origin) = delete;
 	virtual ~Schedule();
-
-	void setTitle(const string _title);
 
 	void fillBins(AlgorithmType type);
 
 	void printSchedule(const int start, const int end) const;
 	void printEffectivity() const;
 
-	Schedule& operator=(const Schedule& origin);
+	Schedule& operator=(const Schedule& origin) = delete;
 	bool operator==(const Schedule& origin) = delete;
 	bool operator!=(const Schedule& origin) = delete;
 	bool operator<(const Schedule& origin) = delete;
