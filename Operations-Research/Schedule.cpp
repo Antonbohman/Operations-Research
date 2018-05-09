@@ -79,7 +79,7 @@ void Schedule::printSchedule(const int start, const int end) const {
 		for (int i = 0; i < end - start; i++) {
 			int scale = (1 - ((float)rooms[i].remainingSize() / rooms[i].maxSize())) * length;
 
-			cout << "Room " << i + 1 << " |";
+			cout << "Room " << (i + 1) << (i+1 > 9 ? "":" ") << " |";
 			SetConsoleTextAttribute(hstdout, 0x03);
 			for (int x = 0; x < length; x++) {
 				cout << (scale > x ? (char)254u : (char)NULL);
