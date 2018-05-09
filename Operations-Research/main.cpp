@@ -219,6 +219,40 @@ int main() {
 		}
 	}
 
+	if (readFromFile("Operationer_3.txt", &max_queue) &&
+		readFromFile("Operationer_3.txt", &min_queue) &&
+		readFromFile("Operationer_3.txt", &list)) {
+
+
+			//BEST FIT
+			{
+				Schedule schedule(max_queue, 16, singleDay, 1);
+				schedule.fillBins(Schedule::BEST_FIT);
+
+				cout << "\tTest 16 - Operationer_3.txt - Best Fit - Max Heap" << endl << endl;
+				schedule.printSchedule(0, 16);
+				schedule.printEffectivity();
+			}
+
+			{
+				Schedule schedule(min_queue, 16, singleDay, 1);
+				schedule.fillBins(Schedule::BEST_FIT);
+
+				cout << "\tTest 17 - Operationer_3.txt - Best Fit - Min Heap" << endl << endl;
+				schedule.printSchedule(0, 16);
+				schedule.printEffectivity();
+			}
+
+			{
+				Schedule schedule(list, 16, singleDay, 1);
+				schedule.fillBins(Schedule::BEST_FIT);
+
+				cout << "\tTest 18 - Operationer_3.txt - Best Fit - Unordered List" << endl << endl;
+				schedule.printSchedule(0, 16);
+				schedule.printEffectivity();
+			}
+	}
+
 	getchar();
 	return EXIT_SUCCESS;
 }
