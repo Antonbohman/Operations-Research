@@ -23,6 +23,11 @@ bool Bin::addOperation(const Operation & op) {
 	return added;
 }
 
+List<Operation> Bin::collectOperations(int & _size) const {
+	_size = size;
+	return schedule;
+}
+
 int Bin::remainingSize() const {
 	int output = size;
 
