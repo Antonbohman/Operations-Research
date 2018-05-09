@@ -15,7 +15,7 @@ public:
 	~Bin();
 
 	bool addOperation(const Operation& op);
-	List<Operation> collectOperations(int& _size) const;
+	const List<Operation> collectOperations() const;
 	int remainingSize() const;
 	int maxSize() const;
 	void empty();

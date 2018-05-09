@@ -70,6 +70,8 @@ void Schedule::printSchedule(const int start, const int end) const {
 	if (start >= 0 && end >= 0 && start <= end) {
 		int length = 40;
 
+		List<Operation> schedule;
+
 		Bin* rooms = this->rooms + start;
 
 		HANDLE hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -86,6 +88,13 @@ void Schedule::printSchedule(const int start, const int end) const {
 			}
 			SetConsoleTextAttribute(hstdout, csbi.wAttributes);
 			cout << "| " << intToTime(rooms[i].remainingSize()) << "/" << intToTime(rooms[i].maxSize()) << endl;
+			schedule = rooms[i].collectOperations();
+			cout << "\t ";
+			cout << schedule.getAt(0).getID();
+			for (int j = 1; j < schedule.length(); j++) {
+				cout << "," << schedule.getAt(j).getID();
+			}
+			cout << endl;
 		}
 	}
 }
