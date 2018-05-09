@@ -22,7 +22,9 @@ int main() {
 	int singleDay[1] = { 60 * 11 };
 	int doubleDay[3] = { 60 * 11, 60 * 14, 60 * 9 };
 
-	if (readFromFile("Operationer_1a.txt", &max_queue)) {
+	if (readFromFile("Operationer_1a.txt", &max_queue) &&
+		readFromFile("Operationer_1a.txt", &min_queue) &&
+		readFromFile("Operationer_1a.txt", &list)) {
 		{
 			Schedule schedule(max_queue, 3, singleDay, 1);
 			schedule.fillBins(Schedule::NEXT_FIT);
@@ -40,6 +42,33 @@ int main() {
 			schedule.printSchedule(0, 3);
 			schedule.printEffectivity();
 		}
+
+		{
+			Schedule schedule(max_queue, 3, singleDay, 1);
+			schedule.fillBins(Schedule::BEST_FIT);
+
+			cout << "\tTest 3 - Operationer_1a.txt - Best Fit - Max Heap" << endl << endl;
+			schedule.printSchedule(0, 3);
+			schedule.printEffectivity();
+		}
+
+		{
+			Schedule schedule(min_queue, 3, singleDay, 1);
+			schedule.fillBins(Schedule::FIRST_FIT);
+
+			cout << "\tTest 4 - Operationer_1a.txt - First Fit - Low Heap" << endl << endl;
+			schedule.printSchedule(0, 3);
+			schedule.printEffectivity();
+		}
+
+		{
+			Schedule schedule(list, 3, singleDay, 1);
+			schedule.fillBins(Schedule::FIRST_FIT);
+
+			cout << "\tTest 5 - Operationer_1a.txt - First Fit - Unordered List" << endl << endl;
+			schedule.printSchedule(0, 3);
+			schedule.printEffectivity();
+		}
 	}
 
 
@@ -48,7 +77,7 @@ int main() {
 			Schedule schedule(max_queue, 6, doubleDay, 3);
 			schedule.fillBins(Schedule::FIRST_FIT);
 
-			cout << "\tTest 3 - Operationer_2.txt - First Fit - Max Heap" << endl << endl;
+			cout << "\tTest 6 - Operationer_2.txt - First Fit - Max Heap" << endl << endl;
 			cout << "Monday:" << endl;
 			schedule.printSchedule(0, 3);
 			cout << endl << "Thuesday:" << endl;
