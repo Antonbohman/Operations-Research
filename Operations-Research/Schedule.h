@@ -10,11 +10,6 @@
 
 class Schedule {
 private:
-	static const int NO_FIT = 1;
-
-	static const int HEAP = 0;
-	static const int LIST = 1;
-
 	string title;
 	int algorithmType;
 	int containerType;
@@ -28,7 +23,7 @@ private:
 	int amountRooms = 0;
 	Bin* rooms;
 
-	string intToTime(const int time);
+	string intToTime(const int time) const;
 
 	void nextFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms, int& totalTime, int& totalOperation, int& bookedTime, int& bookedOperation, clock_t& processTime);
 	void nextFit(List<Operation>& list, const int amountRooms, Bin* rooms, int& totalTime, int& totalOperation, int& bookedTime, int& bookedOperation, clock_t& processTime);
@@ -50,8 +45,8 @@ public:
 
 	void setTitle(const string _title);
 
-	void printSchedule(const int amountRooms, const Bin* rooms);
-	void printEffectivity(const int totalTime, const int totalOperation, const int& bookedTime, const int bookedOperation, const clock_t processTime);
+	void printSchedule(const int start, const int end) const;
+	void printEffectivity() const;
 
 	Schedule& operator=(const Schedule& origin);
 	bool operator==(const Schedule& origin) = delete;
