@@ -43,7 +43,7 @@ public:
 
 	Schedule(const PriorityQueue<Operation>& _queue, const int _amountRooms = 0, const int* timeSpan = {}); //ordered operations
 	Schedule(const List<Operation>& _list, const int _amountRooms = 0, const int* timeSpan = {}); //unordered operations
-	Schedule(const Schedule& origin) = delete;
+	Schedule(const Schedule& origin);
 	virtual ~Schedule();
 
 	void setTitle(const string _title);
