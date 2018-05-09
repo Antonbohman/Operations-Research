@@ -4,6 +4,7 @@
 #include <string>
 #include <windows.h>
 #include <ctime>
+#include <math.h>
 
 #include "Bin.h"
 #include "PriorityQueue.h"

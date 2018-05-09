@@ -68,7 +68,8 @@ void Schedule::fillBins(AlgorithmType type) {
 
 void Schedule::printSchedule(const int start, const int end) const {
 	if (start >= 0 && end >= 0 && start <= end) {
-		int length = 40;
+		int length = 80;
+		float scale = 0;
 
 		List<Operation> schedule;
 
@@ -79,7 +80,7 @@ void Schedule::printSchedule(const int start, const int end) const {
 		GetConsoleScreenBufferInfo(hstdout, &csbi);
 
 		for (int i = 0; i < end - start; i++) {
-			int scale = (1 - ((float)rooms[i].remainingSize() / rooms[i].maxSize())) * length;
+			scale = (1 - ((float)rooms[i].remainingSize() / rooms[i].maxSize())) * length;
 
 			cout << "Room " << (i + 1) << (i+1 > 9 ? "":" ") << " |";
 			SetConsoleTextAttribute(hstdout, 0x03);
@@ -87,7 +88,8 @@ void Schedule::printSchedule(const int start, const int end) const {
 				cout << (scale > x ? (char)254u : (char)NULL);
 			}
 			SetConsoleTextAttribute(hstdout, csbi.wAttributes);
-			cout << "| " << intToTime(rooms[i].remainingSize()) << "/" << intToTime(rooms[i].maxSize()) << endl;
+			cout << "| " << to_string((int)round((scale/length)*100)) << "% " << intToTime(rooms[i].remainingSize()) << "/" << intToTime(rooms[i].maxSize()) << endl;
+
 			schedule = rooms[i].collectOperations();
 			cout << "\t ";
 			cout << schedule.getAt(0).getID();
@@ -103,7 +105,7 @@ void Schedule::printEffectivity() const {
 	cout << endl << "Effective Time: " << intToTime(bookedTime) << "/" << intToTime(totalTime) << endl;
 	cout << "Operations: " << bookedOperation << "/" << totalOperation << endl << endl;
 	cout << "Time to process algorithm: " << to_string(((float)processTime) / CLOCKS_PER_SEC) << "ms" << endl << endl;
-	cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
+	cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
 }
 
 string Schedule::intToTime(const int time) const {
