@@ -113,16 +113,16 @@ int main() {
 		}
 	}
 
-	if (readFromFile("Operationer_1b.txt", &max_queue) &&
-		readFromFile("Operationer_1b.txt", &min_queue) &&
-		readFromFile("Operationer_1b.txt", &list)) {
+	if (readFromFile("Operationer_3.txt", &max_queue) &&
+		readFromFile("Operationer_3.txt", &min_queue) &&
+		readFromFile("Operationer_3.txt", &list)) {
 
 		//NEXT FIT
 			{
 				Schedule schedule(max_queue, 3, singleDay, 1);
 				schedule.fillBins(Schedule::NEXT_FIT);
 
-				cout << "\tTest 1 - Operationer_1b.txt - Next Fit - Max Heap" << endl << endl;
+				cout << "\tTest 10 - Operationer_3.txt - Next Fit - Max Heap" << endl << endl;
 				schedule.printSchedule(0, 3);
 				schedule.printEffectivity();
 			}
@@ -131,7 +131,7 @@ int main() {
 				Schedule schedule(min_queue, 3, singleDay, 1);
 				schedule.fillBins(Schedule::NEXT_FIT);
 
-				cout << "\tTest 2 - Operationer_1b.txt - Next Fit - Min Heap" << endl << endl;
+				cout << "\tTest 11 - Operationer_3.txt - Next Fit - Min Heap" << endl << endl;
 				schedule.printSchedule(0, 3);
 				schedule.printEffectivity();
 			}
@@ -140,7 +140,7 @@ int main() {
 				Schedule schedule(list, 3, singleDay, 1);
 				schedule.fillBins(Schedule::NEXT_FIT);
 
-				cout << "\tTest 3 - Operationer_1b.txt - Next Fit - Unordered List" << endl << endl;
+				cout << "\tTest 12 - Operationer_3.txt - Next Fit - Unordered List" << endl << endl;
 				schedule.printSchedule(0, 3);
 				schedule.printEffectivity();
 			}
@@ -151,7 +151,7 @@ int main() {
 				Schedule schedule(max_queue, 3, singleDay, 1);
 				schedule.fillBins(Schedule::FIRST_FIT);
 
-				cout << "\tTest 4 - Operationer_1b.txt - First Fit - Max Heap" << endl << endl;
+				cout << "\tTest 13 - Operationer_3.txt - First Fit - Max Heap" << endl << endl;
 				schedule.printSchedule(0, 3);
 				schedule.printEffectivity();
 			}
@@ -160,7 +160,7 @@ int main() {
 				Schedule schedule(min_queue, 3, singleDay, 1);
 				schedule.fillBins(Schedule::FIRST_FIT);
 
-				cout << "\tTest 5 - Operationer_1b.txt - First Fit - Min Heap" << endl << endl;
+				cout << "\tTest 14 - Operationer_3.txt - First Fit - Min Heap" << endl << endl;
 				schedule.printSchedule(0, 3);
 				schedule.printEffectivity();
 			}
@@ -169,7 +169,7 @@ int main() {
 				Schedule schedule(list, 3, singleDay, 1);
 				schedule.fillBins(Schedule::FIRST_FIT);
 
-				cout << "\tTest 6 - Operationer_1b.txt - First Fit - Unordered List" << endl << endl;
+				cout << "\tTest 15 - Operationer_3.txt - First Fit - Unordered List" << endl << endl;
 				schedule.printSchedule(0, 3);
 				schedule.printEffectivity();
 			}
@@ -180,7 +180,7 @@ int main() {
 				Schedule schedule(max_queue, 3, singleDay, 1);
 				schedule.fillBins(Schedule::BEST_FIT);
 
-				cout << "\tTest 7 - Operationer_1b.txt - Best Fit - Max Heap" << endl << endl;
+				cout << "\tTest 16 - Operationer_3.txt - Best Fit - Max Heap" << endl << endl;
 				schedule.printSchedule(0, 3);
 				schedule.printEffectivity();
 			}
@@ -189,7 +189,7 @@ int main() {
 				Schedule schedule(min_queue, 3, singleDay, 1);
 				schedule.fillBins(Schedule::BEST_FIT);
 
-				cout << "\tTest 8 - Operationer_1b.txt - Best Fit - Min Heap" << endl << endl;
+				cout << "\tTest 17 - Operationer_3.txt - Best Fit - Min Heap" << endl << endl;
 				schedule.printSchedule(0, 3);
 				schedule.printEffectivity();
 			}
@@ -198,7 +198,7 @@ int main() {
 				Schedule schedule(list, 3, singleDay, 1);
 				schedule.fillBins(Schedule::BEST_FIT);
 
-				cout << "\tTest 9 - Operationer_1b.txt - Best Fit - Unordered List" << endl << endl;
+				cout << "\tTest 18 - Operationer_3.txt - Best Fit - Unordered List" << endl << endl;
 				schedule.printSchedule(0, 3);
 				schedule.printEffectivity();
 			}
@@ -210,7 +210,7 @@ int main() {
 			Schedule schedule(max_queue, 6, doubleDay, 3);
 			schedule.fillBins(Schedule::FIRST_FIT);
 
-			cout << "\tTest 10 - Operationer_2.txt - First Fit - Max Heap" << endl << endl;
+			cout << "\tTest 19 - Operationer_2.txt - First Fit - Max Heap" << endl << endl;
 			cout << "Monday:" << endl;
 			schedule.printSchedule(0, 3);
 			cout << endl << "Thuesday:" << endl;

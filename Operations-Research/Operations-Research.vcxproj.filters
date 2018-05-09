@@ -55,5 +55,8 @@
     <Text Include="Operationer_1b.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="Operationer_3.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
