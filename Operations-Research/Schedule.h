@@ -18,7 +18,7 @@ private:
 
 	DataType datatype;
 
-	int totalTime, totalOperation, bookedTime, bookedOperation;
+	int totalTime, totalOperation, avaibleTime, bookedTime, bookedOperation;
 	clock_t processTime;
 
 	PriorityQueue<Operation> queue;

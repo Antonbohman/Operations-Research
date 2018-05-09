@@ -9,6 +9,7 @@ Schedule::Schedule(const PriorityQueue<Operation>& _queue, const int _amountRoom
 	for (int i = 0; i < amountRooms; i++)
 	{
 		rooms[i].resize(timeSpan[i%timeSpanLength]);
+		avaibleTime += timeSpan[i%timeSpanLength];
 	}
 }
 
@@ -21,6 +22,7 @@ Schedule::Schedule(const List<Operation>& _list, const int _amountRooms, const i
 	for (int i = 0; i < amountRooms; i++)
 	{
 		rooms[i].resize(timeSpan[i%timeSpanLength]);
+		avaibleTime += timeSpan[i%timeSpanLength];
 	}
 }
 
@@ -32,6 +34,7 @@ Schedule::Schedule(const Schedule & origin)
 	datatype = origin.datatype;
 	totalTime = origin.totalTime;
 	totalOperation = origin.totalOperation;
+	avaibleTime = origin.avaibleTime;
 	bookedTime = origin.bookedTime;
 	bookedOperation = origin.bookedOperation;
 	queue = origin.queue;
@@ -102,8 +105,10 @@ void Schedule::printSchedule(const int start, const int end) const {
 }
 
 void Schedule::printEffectivity() const {
-	cout << endl << "Effective Time: " << intToTime(bookedTime) << "/" << intToTime(totalTime) << endl;
-	cout << "Operations: " << bookedOperation << "/" << totalOperation << endl << endl;
+	int effectiveTime = (int)round(((float)bookedTime / avaibleTime) * 100);
+	cout << endl << "Effective Time: " << to_string(effectiveTime) << "% " << intToTime(bookedTime) << "/" << intToTime(avaibleTime) << endl;
+	cout << endl << "Remaining Time: " << intToTime(totalTime-bookedTime) << endl;
+	cout << "Operations: " << bookedOperation << "/" << totalOperation << " | Remaining: " << totalOperation-bookedOperation << endl << endl;
 	cout << "Time to process algorithm: " << to_string(((float)processTime) / CLOCKS_PER_SEC) << "ms" << endl << endl;
 	cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
 }
