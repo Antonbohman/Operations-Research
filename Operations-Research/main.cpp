@@ -60,6 +60,19 @@ int main() {
 			printEffectivity(totalTime, totalOperation, bookedTime, bookedOperation, processTime);
 		}
 
+		if (readFromFile("Operationer_1a.txt", &queue)) {
+			//reset rooms
+			for (int i = 0; i < amountRooms; i++) {
+				rooms[i].empty();
+			}
+
+			bestFit(queue, amountRooms, rooms, totalTime, totalOperation, bookedTime, bookedOperation, processTime);
+
+			cout << "\tTest 3 - Operationer_1a.txt - Best Fit - Max Heap" << endl << endl;
+			printSchedule(amountRooms, rooms);
+			printEffectivity(totalTime, totalOperation, bookedTime, bookedOperation, processTime);
+		}
+
 		delete[] rooms;
 	}
 
@@ -272,20 +285,25 @@ void bestFit(PriorityQueue<Operation>& queue, const int amountRooms, Bin* rooms,
 	bookedOperation = 0;
 
 	time = clock();
+	//best fit decreasing
 	while (!queue.isEmpty()) {
 		curr = queue.dequeue();
 		totalTime += curr.getTime();
 		totalOperation++;
-		//Fix algorithm!
-		/*for (int i = currentRoom; i < amountRooms; i++) {
-			currentRoom = i;
-			if (rooms[i].addOperation(curr)) {
-				i = amountRooms;	//break
-				bookedTime += curr.getTime();
-				bookedOperation++;
+
+		int minIndex = -1;
+		int minValue = INT_MAX;
+		for (int i = 0; i < amountRooms; i++) {
+			if (rooms[i].remainingSize() - curr.getTime() < minValue && rooms[i].remainingSize() - curr.getTime() >= 0) {
+				minIndex = i;
 			}
-		}*/
+		}
+		if (minIndex != -1) { 
+			rooms[minIndex].addOperation(curr); 
+			bookedOperation++; 
+		}
 	}
+
 	processTime = clock() - time;
 }
 
