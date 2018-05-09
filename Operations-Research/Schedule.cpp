@@ -24,8 +24,29 @@ Schedule::Schedule(const List<Operation>& _list, const int _amountRooms, const i
 	}
 }
 
-Schedule::~Schedule() {
+Schedule::Schedule(const Schedule & origin)
+{
+	//free
+	delete[] rooms;
+	//set
+	title = origin.title;
+	datatype = origin.datatype;
+	totalTime = origin.totalTime;
+	totalOperation = origin.totalOperation;
+	bookedTime = origin.bookedTime;
+	bookedOperation = origin.bookedOperation;
+	queue = origin.queue;
+	list = origin.list;
+	amountRooms = origin.amountRooms;
+	rooms = new Bin[amountRooms];
+	for (int i = 0; i < amountRooms; i++)
+	{
+		rooms[i] = Bin(origin.rooms[i]);
+	}
+}
 
+Schedule::~Schedule() {
+	delete[] rooms;
 }
 
 void Schedule::fillBins(AlgorithmType type) {
