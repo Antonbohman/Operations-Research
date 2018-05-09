@@ -23,8 +23,7 @@ bool Bin::addOperation(const Operation & op) {
 	return added;
 }
 
-List<Operation> Bin::collectOperations(int & _size) const {
-	_size = size;
+List<Operation> Bin::collectOperations() const {
 	return schedule;
 }
 
