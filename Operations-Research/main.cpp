@@ -30,17 +30,33 @@ int main() {
 
 		Operation curr;
 
-		//First fit (osäker på rätt namn)
+		//First fit decreasing
+		//while (!queue.isEmpty()) {
+		//	curr = queue.dequeue();
+		//	totalTime += curr.getTime();
+		//	totalOperation++;
+		//	for (int i = 0; i < amountRooms; i++) {
+		//		if (rooms[i].addOperation(curr)) {
+		//			i = amountRooms;	//break
+		//			bookedOperation++;
+		//		}
+		//	}
+		//}
+
+		//best fit decreasing
 		while (!queue.isEmpty()) {
 			curr = queue.dequeue();
 			totalTime += curr.getTime();
 			totalOperation++;
+
+			int minIndex = -1;
+			int minValue = INT_MAX;
 			for (int i = 0; i < amountRooms; i++) {
-				if (rooms[i].addOperation(curr)) {
-					i = amountRooms;	//break
-					bookedOperation++;
+				if (rooms[i].remainingSize() - curr.getTime() < minValue && rooms[i].remainingSize() - curr.getTime() >= 0) {
+					minIndex = i;
 				}
 			}
+			if (minIndex != -1) { rooms[minIndex].addOperation(curr); bookedOperation++; };
 		}
 
 		printSchedule(amountRooms, rooms, totalTime, totalOperation, bookedOperation);
