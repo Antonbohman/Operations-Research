@@ -1,16 +1,27 @@
 #include "Schedule.h"
 
-Schedule::Schedule() {
-
+Schedule::Schedule(const PriorityQueue<Operation>& _queue, const int _amountRooms, const int * timeSpan)
+{
+	datatype = DataType::HEAP;
+	queue = _queue;
+	amountRooms = _amountRooms;
+	rooms = new Bin[amountRooms];
+	for (int i = 0; i < amountRooms; i++)
+	{
+		rooms[i].resize(timeSpan[i]);
+	}
 }
 
-Schedule::Schedule(const PriorityQueue<Operation>& _queue, const int _algorithmType, const int _amountRooms, const int* timeSpan) {
-}
-
-Schedule::Schedule(const List<Operation>& _list, const int _algorithmType, const int _amountRooms, const int* timeSpan) {
-}
-
-Schedule::Schedule(const Schedule & origin) {
+Schedule::Schedule(const List<Operation>& _list, const int _amountRooms, const int * timeSpan)
+{
+	datatype = DataType::LIST;
+	list = _list;
+	amountRooms = _amountRooms;
+	rooms = new Bin[amountRooms];
+	for (int i = 0; i < amountRooms; i++)
+	{
+		rooms[i].resize(timeSpan[i]);
+	}
 }
 
 Schedule::~Schedule() {
@@ -23,6 +34,7 @@ void Schedule::setTitle(const string _title)
 }
 
 void Schedule::fillBins(AlgorithmType type) {
+
 }
 
 void Schedule::printSchedule(const int start, const int end) const {
