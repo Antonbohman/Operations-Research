@@ -68,7 +68,7 @@ void Schedule::fillBins(AlgorithmType type) {
 
 void Schedule::printSchedule(const int start, const int end) const {
 	if (start >= 0 && end >= 0 && start <= end) {
-		int length = 40;
+		int length = 80;
 
 		List<Operation> schedule;
 
