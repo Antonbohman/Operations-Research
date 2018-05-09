@@ -31,7 +31,7 @@ int main() {
 			Schedule schedule(max_queue, 3, singleDay, 1);
 			schedule.fillBins(Schedule::NEXT_FIT);
 
-			cout << "\tTest 1 - Operationer_1a.txt - Next Fit - Max Heap" << endl << endl;
+			cout << "\t\t\tTest 1 - Operationer_1a.txt - Next Fit - Max Heap" << endl << endl;
 			schedule.printSchedule(0, 3);
 			schedule.printEffectivity();
 		}
@@ -40,7 +40,7 @@ int main() {
 			Schedule schedule(min_queue, 3, singleDay, 1);
 			schedule.fillBins(Schedule::NEXT_FIT);
 
-			cout << "\tTest 2 - Operationer_1a.txt - Next Fit - Min Heap" << endl << endl;
+			cout << "\t\t\tTest 2 - Operationer_1a.txt - Next Fit - Min Heap" << endl << endl;
 			schedule.printSchedule(0, 3);
 			schedule.printEffectivity();
 		}
@@ -49,7 +49,7 @@ int main() {
 			Schedule schedule(list, 3, singleDay, 1);
 			schedule.fillBins(Schedule::NEXT_FIT);
 
-			cout << "\tTest 3 - Operationer_1a.txt - Next Fit - Unordered List" << endl << endl;
+			cout << "\t\t\tTest 3 - Operationer_1a.txt - Next Fit - Unordered List" << endl << endl;
 			schedule.printSchedule(0, 3);
 			schedule.printEffectivity();
 		}
@@ -60,7 +60,7 @@ int main() {
 			Schedule schedule(max_queue, 3, singleDay, 1);
 			schedule.fillBins(Schedule::FIRST_FIT);
 
-			cout << "\tTest 4 - Operationer_1a.txt - First Fit - Max Heap" << endl << endl;
+			cout << "\t\t\tTest 4 - Operationer_1a.txt - First Fit - Max Heap" << endl << endl;
 			schedule.printSchedule(0, 3);
 			schedule.printEffectivity();
 		}
@@ -69,7 +69,7 @@ int main() {
 			Schedule schedule(min_queue, 3, singleDay, 1);
 			schedule.fillBins(Schedule::FIRST_FIT);
 
-			cout << "\tTest 5 - Operationer_1a.txt - First Fit - Min Heap" << endl << endl;
+			cout << "\t\t\tTest 5 - Operationer_1a.txt - First Fit - Min Heap" << endl << endl;
 			schedule.printSchedule(0, 3);
 			schedule.printEffectivity();
 		}
@@ -78,7 +78,7 @@ int main() {
 			Schedule schedule(list, 3, singleDay, 1);
 			schedule.fillBins(Schedule::FIRST_FIT);
 
-			cout << "\tTest 6 - Operationer_1a.txt - First Fit - Unordered List" << endl << endl;
+			cout << "\t\t\tTest 6 - Operationer_1a.txt - First Fit - Unordered List" << endl << endl;
 			schedule.printSchedule(0, 3);
 			schedule.printEffectivity();
 		}
@@ -89,7 +89,7 @@ int main() {
 			Schedule schedule(max_queue, 3, singleDay, 1);
 			schedule.fillBins(Schedule::BEST_FIT);
 
-			cout << "\tTest 7 - Operationer_1a.txt - Best Fit - Max Heap" << endl << endl;
+			cout << "\t\t\tTest 7 - Operationer_1a.txt - Best Fit - Max Heap" << endl << endl;
 			schedule.printSchedule(0, 3);
 			schedule.printEffectivity();
 		}
@@ -98,7 +98,7 @@ int main() {
 			Schedule schedule(min_queue, 3, singleDay, 1);
 			schedule.fillBins(Schedule::BEST_FIT);
 
-			cout << "\tTest 8 - Operationer_1a.txt - Best Fit - Min Heap" << endl << endl;
+			cout << "\t\t\tTest 8 - Operationer_1a.txt - Best Fit - Min Heap" << endl << endl;
 			schedule.printSchedule(0, 3);
 			schedule.printEffectivity();
 		}
@@ -107,7 +107,7 @@ int main() {
 			Schedule schedule(list, 3, singleDay, 1);
 			schedule.fillBins(Schedule::BEST_FIT);
 
-			cout << "\tTest 9 - Operationer_1a.txt - Best Fit - Unordered List" << endl << endl;
+			cout << "\t\t\tTest 9 - Operationer_1a.txt - Best Fit - Unordered List" << endl << endl;
 			schedule.printSchedule(0, 3);
 			schedule.printEffectivity();
 		}
@@ -122,7 +122,7 @@ int main() {
 			Schedule schedule(max_queue, 3, singleDay, 1);
 			schedule.fillBins(Schedule::NEXT_FIT);
 
-			cout << "\tTest 10 - Operationer_3.txt - Next Fit - Max Heap" << endl << endl;
+			cout << "\t\t\tTest 10 - Operationer_3.txt - Next Fit - Max Heap" << endl << endl;
 			schedule.printSchedule(0, 3);
 			schedule.printEffectivity();
 		}
@@ -131,7 +131,7 @@ int main() {
 			Schedule schedule(min_queue, 3, singleDay, 1);
 			schedule.fillBins(Schedule::NEXT_FIT);
 
-			cout << "\tTest 11 - Operationer_3.txt - Next Fit - Min Heap" << endl << endl;
+			cout << "\t\t\tTest 11 - Operationer_3.txt - Next Fit - Min Heap" << endl << endl;
 			schedule.printSchedule(0, 3);
 			schedule.printEffectivity();
 		}
@@ -140,7 +140,7 @@ int main() {
 			Schedule schedule(list, 3, singleDay, 1);
 			schedule.fillBins(Schedule::NEXT_FIT);
 
-			cout << "\tTest 12 - Operationer_3.txt - Next Fit - Unordered List" << endl << endl;
+			cout << "\t\t\tTest 12 - Operationer_3.txt - Next Fit - Unordered List" << endl << endl;
 			schedule.printSchedule(0, 3);
 			schedule.printEffectivity();
 		}
@@ -151,7 +151,7 @@ int main() {
 			Schedule schedule(max_queue, 3, singleDay, 1);
 			schedule.fillBins(Schedule::FIRST_FIT);
 
-			cout << "\tTest 13 - Operationer_3.txt - First Fit - Max Heap" << endl << endl;
+			cout << "\t\t\tTest 13 - Operationer_3.txt - First Fit - Max Heap" << endl << endl;
 			schedule.printSchedule(0, 3);
 			schedule.printEffectivity();
 		}
@@ -160,7 +160,7 @@ int main() {
 			Schedule schedule(min_queue, 3, singleDay, 1);
 			schedule.fillBins(Schedule::FIRST_FIT);
 
-			cout << "\tTest 14 - Operationer_3.txt - First Fit - Min Heap" << endl << endl;
+			cout << "\t\t\tTest 14 - Operationer_3.txt - First Fit - Min Heap" << endl << endl;
 			schedule.printSchedule(0, 3);
 			schedule.printEffectivity();
 		}
@@ -169,7 +169,7 @@ int main() {
 			Schedule schedule(list, 3, singleDay, 1);
 			schedule.fillBins(Schedule::FIRST_FIT);
 
-			cout << "\tTest 15 - Operationer_3.txt - First Fit - Unordered List" << endl << endl;
+			cout << "\t\t\tTest 15 - Operationer_3.txt - First Fit - Unordered List" << endl << endl;
 			schedule.printSchedule(0, 3);
 			schedule.printEffectivity();
 		}
@@ -180,7 +180,7 @@ int main() {
 			Schedule schedule(max_queue, 3, singleDay, 1);
 			schedule.fillBins(Schedule::BEST_FIT);
 
-			cout << "\tTest 16 - Operationer_3.txt - Best Fit - Max Heap" << endl << endl;
+			cout << "\t\t\tTest 16 - Operationer_3.txt - Best Fit - Max Heap" << endl << endl;
 			schedule.printSchedule(0, 3);
 			schedule.printEffectivity();
 		}
@@ -189,7 +189,7 @@ int main() {
 			Schedule schedule(min_queue, 3, singleDay, 1);
 			schedule.fillBins(Schedule::BEST_FIT);
 
-			cout << "\tTest 17 - Operationer_3.txt - Best Fit - Min Heap" << endl << endl;
+			cout << "\t\t\tTest 17 - Operationer_3.txt - Best Fit - Min Heap" << endl << endl;
 			schedule.printSchedule(0, 3);
 			schedule.printEffectivity();
 		}
@@ -198,7 +198,7 @@ int main() {
 			Schedule schedule(list, 3, singleDay, 1);
 			schedule.fillBins(Schedule::BEST_FIT);
 
-			cout << "\tTest 18 - Operationer_3.txt - Best Fit - Unordered List" << endl << endl;
+			cout << "\t\t\tTest 18 - Operationer_3.txt - Best Fit - Unordered List" << endl << endl;
 			schedule.printSchedule(0, 3);
 			schedule.printEffectivity();
 		}
@@ -210,7 +210,7 @@ int main() {
 			Schedule schedule(max_queue, 6, doubleDay, 3);
 			schedule.fillBins(Schedule::FIRST_FIT);
 
-			cout << "\tTest 19 - Operationer_2.txt - First Fit - Max Heap" << endl << endl;
+			cout << "\t\t\tTest 19 - Operationer_2.txt - First Fit - Max Heap" << endl << endl;
 			cout << "Monday:" << endl;
 			schedule.printSchedule(0, 3);
 			cout << endl << "Thuesday:" << endl;
@@ -229,7 +229,7 @@ int main() {
 				Schedule schedule(max_queue, 16, singleDay, 1);
 				schedule.fillBins(Schedule::BEST_FIT);
 
-				cout << "\tTest 16 - Operationer_3.txt - Best Fit - Max Heap" << endl << endl;
+				cout << "\t\t\tTest 16 - Operationer_3.txt - Best Fit - Max Heap" << endl << endl;
 				schedule.printSchedule(0, 16);
 				schedule.printEffectivity();
 			}
@@ -238,7 +238,7 @@ int main() {
 				Schedule schedule(min_queue, 16, singleDay, 1);
 				schedule.fillBins(Schedule::BEST_FIT);
 
-				cout << "\tTest 17 - Operationer_3.txt - Best Fit - Min Heap" << endl << endl;
+				cout << "\t\t\tTest 17 - Operationer_3.txt - Best Fit - Min Heap" << endl << endl;
 				schedule.printSchedule(0, 16);
 				schedule.printEffectivity();
 			}
@@ -247,7 +247,7 @@ int main() {
 				Schedule schedule(list, 16, singleDay, 1);
 				schedule.fillBins(Schedule::BEST_FIT);
 
-				cout << "\tTest 18 - Operationer_3.txt - Best Fit - Unordered List" << endl << endl;
+				cout << "\t\t\tTest 18 - Operationer_3.txt - Best Fit - Unordered List" << endl << endl;
 				schedule.printSchedule(0, 16);
 				schedule.printEffectivity();
 			}

@@ -4,6 +4,7 @@
 #include <string>
 #include <windows.h>
 #include <ctime>
+#include <math.h>
 
 #include "Bin.h"
 #include "PriorityQueue.h"
@@ -17,7 +18,7 @@ private:
 
 	DataType datatype;
 
-	int totalTime, totalOperation, bookedTime, bookedOperation;
+	int totalTime, totalOperation, avaibleTime, bookedTime, bookedOperation;
 	clock_t processTime;
 
 	PriorityQueue<Operation> queue;
