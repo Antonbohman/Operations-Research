@@ -24,7 +24,7 @@ private:
 	PriorityQueue<Operation> queue;
 	List<Operation> list;
 
-	int amountRooms = 0;
+	int amountRooms;
 	Bin* rooms;
 
 	string intToTime(const int time) const;
@@ -45,8 +45,6 @@ public:
 	Schedule(const List<Operation>& _list, const int _algorithmType = 0, const int _amountRooms = 0, const int* timeSpan = {}); //unordered operations
 	Schedule(const Schedule& origin);
 	virtual ~Schedule();
-
-	void setTitle(const string _title);
 
 	void fillBins(AlgorithmType type);
 

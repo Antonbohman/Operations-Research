@@ -7,6 +7,8 @@
 #include "Bin.h"
 #include "PriorityQueue.h"
 
+#include "Schedule.h"
+
 using namespace std;
 
 bool readFromFile(const string filename, PriorityQueue<Operation>* que);
@@ -24,80 +26,104 @@ void printEffectivity(const int totalTime, const int totalOperation, const int& 
 *  main: Starting point
 */
 int main() {
-	PriorityQueue<Operation> queue(MAX_HEAP);
+	PriorityQueue<Operation> max_queue(MAX_HEAP);
+	PriorityQueue<Operation> min_queue(MIN_HEAP);
+	List<Operation> list;
 
-	int totalTime, totalOperation, bookedTime, bookedOperation; 
-	clock_t processTime;
+	int singleDay[1] = { 60 * 11 };
+	int doubleDay[3] = { 60 * 11, 60 * 14, 60 * 9 };
 
-	int amountRooms = 0;
-	Bin* rooms;
+	if (readFromFile("Operationer_1a.txt", &max_queue)) {
+		Schedule schedule_test1(max_queue, 3, singleDay);
+		schedule_test1.fillBins(Schedule::FIRST_FIT);
 
-	if (readFromFile("Operationer_1a.txt", &queue)) {
-		amountRooms = 3;
-		rooms = new Bin[amountRooms];
+		cout << "\tTest 1 - Operationer_1a.txt - First Fit - Max Heap" << endl << endl;
+		schedule_test1.printSchedule(0, 3);
+		schedule_test1.printEffectivity();
 
-		//create rooms
-		for (int i = 0; i < amountRooms; i++) {
-			rooms[i].resize(60 * 11);	//8.00 - 19.00 (11 hours)
-		}
 
-		nextFit(queue, amountRooms, rooms, totalTime, totalOperation, bookedTime, bookedOperation, processTime);
+		Schedule schedule_test2(max_queue, 3, singleDay);
+		schedule_test2.fillBins(Schedule::NEXT_FIT);
 
 		cout << "\tTest 1 - Operationer_1a.txt - Next Fit - Max Heap" << endl << endl;
-		printSchedule(amountRooms, rooms);
-		printEffectivity(totalTime, totalOperation, bookedTime, bookedOperation, processTime);
-
-		if (readFromFile("Operationer_1a.txt", &queue)) {
-			//reset rooms
-			for (int i = 0; i < amountRooms; i++) {
-				rooms[i].empty();
-			}
-
-			firstFit(queue, amountRooms, rooms, totalTime, totalOperation, bookedTime, bookedOperation, processTime);
-
-			cout << "\tTest 2 - Operationer_1a.txt - First Fit - Max Heap" << endl << endl;
-			printSchedule(amountRooms, rooms);
-			printEffectivity(totalTime, totalOperation, bookedTime, bookedOperation, processTime);
-		}
-
-		if (readFromFile("Operationer_1a.txt", &queue)) {
-			//reset rooms
-			for (int i = 0; i < amountRooms; i++) {
-				rooms[i].empty();
-			}
-
-			bestFit(queue, amountRooms, rooms, totalTime, totalOperation, bookedTime, bookedOperation, processTime);
-
-			cout << "\tTest 3 - Operationer_1a.txt - Best Fit - Max Heap" << endl << endl;
-			printSchedule(amountRooms, rooms);
-			printEffectivity(totalTime, totalOperation, bookedTime, bookedOperation, processTime);
-		}
-
-		delete[] rooms;
+		schedule_test2.printSchedule(0, 3);
+		schedule_test2.printEffectivity();
 	}
 
-	if (readFromFile("Operationer_2.txt", &queue)) {
-		amountRooms = 6;
-		rooms = new Bin[amountRooms];
 
-		//create rooms
-		for (int i = 0; i < amountRooms; i=i+3) {
-			rooms[i].resize(60 * 11);	//8.00 - 19.00 (11 hours)
-			rooms[i+1].resize(60 * 14);	//8.00 - 22.00 (14 hours)
-			rooms[i+2].resize(60 * 9);	//8.00 - 17.00 (9 hours)
-		}
 
-		firstFit(queue, amountRooms, rooms, totalTime, totalOperation, bookedTime, bookedOperation, processTime);
+	//int totalTime, totalOperation, bookedTime, bookedOperation; 
+	//clock_t processTime;
 
-		cout << "\tTest 3 - Operationer_2.txt - First Fit - Max Heap" << endl << endl;
-		cout << "Monday:" << endl;
-		printSchedule(amountRooms/2, rooms);
-		cout << endl << "Thuesday:" << endl;
-		printSchedule(amountRooms/2, rooms+3);
-		printEffectivity(totalTime, totalOperation, bookedTime, bookedOperation, processTime);
+	//int amountRooms = 0;
+	//Bin* rooms;
 
-		delete[] rooms;
-	}
+	//if (readFromFile("Operationer_1a.txt", &queue)) {
+	//	amountRooms = 3;
+	//	rooms = new Bin[amountRooms];
+
+	//	//create rooms
+	//	for (int i = 0; i < amountRooms; i++) {
+	//		rooms[i].resize(60 * 11);	//8.00 - 19.00 (11 hours)
+	//	}
+
+	//	nextFit(queue, amountRooms, rooms, totalTime, totalOperation, bookedTime, bookedOperation, processTime);
+
+	//	cout << "\tTest 1 - Operationer_1a.txt - Next Fit - Max Heap" << endl << endl;
+	//	printSchedule(amountRooms, rooms);
+	//	printEffectivity(totalTime, totalOperation, bookedTime, bookedOperation, processTime);
+
+	//	if (readFromFile("Operationer_1a.txt", &queue)) {
+	//		//reset rooms
+	//		for (int i = 0; i < amountRooms; i++) {
+	//			rooms[i].empty();
+	//		}
+
+	//		firstFit(queue, amountRooms, rooms, totalTime, totalOperation, bookedTime, bookedOperation, processTime);
+
+	//		cout << "\tTest 2 - Operationer_1a.txt - First Fit - Max Heap" << endl << endl;
+	//		printSchedule(amountRooms, rooms);
+	//		printEffectivity(totalTime, totalOperation, bookedTime, bookedOperation, processTime);
+	//	}
+
+	//	if (readFromFile("Operationer_1a.txt", &queue)) {
+	//		//reset rooms
+	//		for (int i = 0; i < amountRooms; i++) {
+	//			rooms[i].empty();
+	//		}
+
+	//		bestFit(queue, amountRooms, rooms, totalTime, totalOperation, bookedTime, bookedOperation, processTime);
+
+	//		cout << "\tTest 3 - Operationer_1a.txt - Best Fit - Max Heap" << endl << endl;
+	//		printSchedule(amountRooms, rooms);
+	//		printEffectivity(totalTime, totalOperation, bookedTime, bookedOperation, processTime);
+	//	}
+
+	//	delete[] rooms;
+	//}
+
+	//if (readFromFile("Operationer_2.txt", &queue)) {
+	//	amountRooms = 6;
+	//	rooms = new Bin[amountRooms];
+
+	//	//create rooms
+	//	for (int i = 0; i < amountRooms; i=i+3) {
+	//		rooms[i].resize(60 * 11);	//8.00 - 19.00 (11 hours)
+	//		rooms[i+1].resize(60 * 14);	//8.00 - 22.00 (14 hours)
+	//		rooms[i+2].resize(60 * 9);	//8.00 - 17.00 (9 hours)
+	//	}
+
+	//	firstFit(queue, amountRooms, rooms, totalTime, totalOperation, bookedTime, bookedOperation, processTime);
+
+	//	cout << "\tTest 3 - Operationer_2.txt - First Fit - Max Heap" << endl << endl;
+	//	cout << "Monday:" << endl;
+	//	printSchedule(amountRooms/2, rooms);
+	//	cout << endl << "Thuesday:" << endl;
+	//	printSchedule(amountRooms/2, rooms+3);
+	//	printEffectivity(totalTime, totalOperation, bookedTime, bookedOperation, processTime);
+
+	//	delete[] rooms;
+	//}
 
 	getchar();
 	return EXIT_SUCCESS;
