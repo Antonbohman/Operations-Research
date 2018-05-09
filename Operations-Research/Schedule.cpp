@@ -28,11 +28,6 @@ Schedule::~Schedule() {
 
 }
 
-void Schedule::setTitle(const string _title) 
-{
-	title = _title;
-}
-
 void Schedule::fillBins(AlgorithmType type) {
 
 }

@@ -15,7 +15,6 @@ private:
 		LIST
 	};
 
-	string title;
 	DataType datatype;
 
 	int totalTime, totalOperation, bookedTime, bookedOperation;
