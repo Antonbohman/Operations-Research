@@ -34,23 +34,34 @@ int main() {
 	int doubleDay[3] = { 60 * 11, 60 * 14, 60 * 9 };
 
 	if (readFromFile("Operationer_1a.txt", &max_queue)) {
-		Schedule schedule_test1(max_queue, 3, singleDay);
-		schedule_test1.fillBins(Schedule::FIRST_FIT);
+		Schedule schedule_test1(max_queue, 3, singleDay, 1);
+		schedule_test1.fillBins(Schedule::NEXT_FIT);
 
-		cout << "\tTest 1 - Operationer_1a.txt - First Fit - Max Heap" << endl << endl;
+		cout << "\tTest 1 - Operationer_1a.txt - Next Fit - Max Heap" << endl << endl;
 		schedule_test1.printSchedule(0, 3);
 		schedule_test1.printEffectivity();
 
 
-		Schedule schedule_test2(max_queue, 3, singleDay);
-		schedule_test2.fillBins(Schedule::NEXT_FIT);
+		Schedule schedule_test2(max_queue, 3, singleDay, 1);
+		schedule_test2.fillBins(Schedule::FIRST_FIT);
 
-		cout << "\tTest 1 - Operationer_1a.txt - Next Fit - Max Heap" << endl << endl;
+		cout << "\tTest 2 - Operationer_1a.txt - First Fit - Max Heap" << endl << endl;
 		schedule_test2.printSchedule(0, 3);
 		schedule_test2.printEffectivity();
 	}
 
 
+	if (readFromFile("Operationer_2.txt", &max_queue)) {
+		Schedule schedule_test1(max_queue, 6, doubleDay, 3);
+		schedule_test1.fillBins(Schedule::FIRST_FIT);
+
+		cout << "\tTest 3 - Operationer_2.txt - First Fit - Max Heap" << endl << endl;
+		cout << "Monday:" << endl;
+		schedule_test1.printSchedule(0, 3);
+		cout << endl << "Thuesday:" << endl;
+		schedule_test1.printSchedule(3, 6);
+		schedule_test1.printEffectivity();
+	}
 
 	//int totalTime, totalOperation, bookedTime, bookedOperation; 
 	//clock_t processTime;
