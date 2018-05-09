@@ -35,15 +35,15 @@ private:
 
 public:
 	enum AlgorithmType {
+		NO_FIT,
 		FIRST_FIT,
 		NEXT_FIT,
 		BEST_FIT
 	};
 
-	Schedule();
-	Schedule(const PriorityQueue<Operation>& _queue, const int _algorithmType = 0, const int _amountRooms = 0, const int* timeSpan = {}); //ordered operations
-	Schedule(const List<Operation>& _list, const int _algorithmType = 0, const int _amountRooms = 0, const int* timeSpan = {}); //unordered operations
-	Schedule(const Schedule& origin);
+	Schedule(const PriorityQueue<Operation>& _queue, const int _amountRooms = 0, const int* timeSpan = {}); //ordered operations
+	Schedule(const List<Operation>& _list, const int _amountRooms = 0, const int* timeSpan = {}); //unordered operations
+	Schedule(const Schedule& origin) = delete;
 	virtual ~Schedule();
 
 	void setTitle(const string _title);
