@@ -42,7 +42,7 @@ public:
 
 	Schedule(const PriorityQueue<Operation>& _queue, const int _amountRooms = 0, const int* timeSpan = { 0 }, const int timeSpanLength = 1); //ordered operations
 	Schedule(const List<Operation>& _list, const int _amountRooms = 0, const int* timeSpan = { 0 }, const int timeSpanLength = 1); //unordered operations
-	Schedule(const Schedule& origin) = delete;
+	Schedule(const Schedule& origin);
 	virtual ~Schedule();
 
 	void fillBins(AlgorithmType type);

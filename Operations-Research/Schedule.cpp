@@ -29,7 +29,6 @@ Schedule::Schedule(const Schedule & origin)
 	//free
 	delete[] rooms;
 	//set
-	title = origin.title;
 	datatype = origin.datatype;
 	totalTime = origin.totalTime;
 	totalOperation = origin.totalOperation;
