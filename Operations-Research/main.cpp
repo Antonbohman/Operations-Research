@@ -8,8 +8,27 @@
 
 using namespace std;
 
+void emptyPriorityQueue(PriorityQueue<Operation>* que);
+void emptyList(List<Operation>* list);
+
 bool readFromFile(const string filename, PriorityQueue<Operation>* que);
 bool readFromFile(const string filename, List<Operation>* list);
+
+Schedule makeSingleSchedule(const PriorityQueue<Operation>* que, const int heapType, const Schedule::AlgorithmType fitType,
+							const int amountRooms, const int* timeSpan, const int timeSpanLength,
+							int& testNr, const string fileName);
+
+Schedule makeSingleSchedule(const List<Operation>* list, const Schedule::AlgorithmType fitType,
+							const int amountRooms, const int* timeSpan, const int timeSpanLength,
+							int& testNr, const string fileName);
+
+Schedule makeDoubleSchedule(const PriorityQueue<Operation>* que, const int heapType, const Schedule::AlgorithmType fitType,
+							const int amountRooms, const int* timeSpan, const int timeSpanLength,
+							int& testNr, const string fileName);
+
+Schedule makeDoubleSchedule(const List<Operation>* list, const Schedule::AlgorithmType fitType,
+							const int amountRooms, const int* timeSpan, const int timeSpanLength,
+							int& testNr, const string fileName);
 
 /*
 *  main: Starting point
@@ -22,239 +41,121 @@ int main() {
 	int singleDay[1] = { 60 * 11 };	//
 	int doubleDay[3] = { 60 * 11, 60 * 14, 60 * 9 };
 
-	if (readFromFile("Operationer_1a.txt", &max_queue) &&
-		readFromFile("Operationer_1a.txt", &min_queue) &&
-		readFromFile("Operationer_1a.txt", &list)) {
+	int testNr = 1;
+	string fileName = "";
+
+	Schedule currSchedule;
+	Schedule storedSchedule;
+
+	fileName = "Operationer_1a.txt";
+
+	if (readFromFile(fileName, &max_queue) &&
+		readFromFile(fileName, &min_queue) &&
+		readFromFile(fileName, &list)) {
 
 		//NEXT FIT
-		{
-			Schedule schedule(max_queue, 3, singleDay, 1);
-			schedule.fillBins(Schedule::NEXT_FIT);
+		currSchedule = makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+		if (currSchedule > storedSchedule)
+			storedSchedule = currSchedule;
+		currSchedule = makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+		if (currSchedule > storedSchedule)
+			storedSchedule = currSchedule;
+		currSchedule = makeSingleSchedule(&list, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+		if (currSchedule > storedSchedule)
+			storedSchedule = currSchedule;
 
-			cout << "\t\t\tTest 1 - Operationer_1a.txt - Next Fit - Max Heap" << endl << endl;
-			schedule.printSchedule(0, 3);
-			schedule.printEffectivity();
-		}
+		cout << "\t\t\t\tThe most effective schedule:" << endl << endl;
 
-		{
-			Schedule schedule(min_queue, 3, singleDay, 1);
-			schedule.fillBins(Schedule::NEXT_FIT);
-
-			cout << "\t\t\tTest 2 - Operationer_1a.txt - Next Fit - Min Heap" << endl << endl;
-			schedule.printSchedule(0, 3);
-			schedule.printEffectivity();
-		}
-
-		{
-			Schedule schedule(list, 3, singleDay, 1);
-			schedule.fillBins(Schedule::NEXT_FIT);
-
-			cout << "\t\t\tTest 3 - Operationer_1a.txt - Next Fit - Unordered List" << endl << endl;
-			schedule.printSchedule(0, 3);
-			schedule.printEffectivity();
-		}
-
-
-		//FIRST FIT
-		{
-			Schedule schedule(max_queue, 3, singleDay, 1);
-			schedule.fillBins(Schedule::FIRST_FIT);
-
-			cout << "\t\t\tTest 4 - Operationer_1a.txt - First Fit - Max Heap" << endl << endl;
-			schedule.printSchedule(0, 3);
-			schedule.printEffectivity();
-		}
-
-		{
-			Schedule schedule(min_queue, 3, singleDay, 1);
-			schedule.fillBins(Schedule::FIRST_FIT);
-
-			cout << "\t\t\tTest 5 - Operationer_1a.txt - First Fit - Min Heap" << endl << endl;
-			schedule.printSchedule(0, 3);
-			schedule.printEffectivity();
-		}
-
-		{
-			Schedule schedule(list, 3, singleDay, 1);
-			schedule.fillBins(Schedule::FIRST_FIT);
-
-			cout << "\t\t\tTest 6 - Operationer_1a.txt - First Fit - Unordered List" << endl << endl;
-			schedule.printSchedule(0, 3);
-			schedule.printEffectivity();
-		}
-
-
-		//BEST FIT
-		{
-			Schedule schedule(max_queue, 3, singleDay, 1);
-			schedule.fillBins(Schedule::BEST_FIT);
-
-			cout << "\t\t\tTest 7 - Operationer_1a.txt - Best Fit - Max Heap" << endl << endl;
-			schedule.printSchedule(0, 3);
-			schedule.printEffectivity();
-		}
-
-		{
-			Schedule schedule(min_queue, 3, singleDay, 1);
-			schedule.fillBins(Schedule::BEST_FIT);
-
-			cout << "\t\t\tTest 8 - Operationer_1a.txt - Best Fit - Min Heap" << endl << endl;
-			schedule.printSchedule(0, 3);
-			schedule.printEffectivity();
-		}
-
-		{
-			Schedule schedule(list, 3, singleDay, 1);
-			schedule.fillBins(Schedule::BEST_FIT);
-
-			cout << "\t\t\tTest 9 - Operationer_1a.txt - Best Fit - Unordered List" << endl << endl;
-			schedule.printSchedule(0, 3);
-			schedule.printEffectivity();
-		}
+		storedSchedule.printSchedule(0,3);
+		storedSchedule.printEffectivity();
 	}
 
-	if (readFromFile("Operationer_3.txt", &max_queue) &&
-		readFromFile("Operationer_3.txt", &min_queue) &&
-		readFromFile("Operationer_3.txt", &list)) {
+	fileName = "Operationer_1a.txt";
+
+	/*if (readFromFile(fileName, &max_queue) &&
+		readFromFile(fileName, &min_queue) &&
+		readFromFile(fileName, &list)) {
 
 		//NEXT FIT
-		{
-			Schedule schedule(max_queue, 3, singleDay, 1);
-			schedule.fillBins(Schedule::NEXT_FIT);
-
-			cout << "\t\t\tTest 10 - Operationer_3.txt - Next Fit - Max Heap" << endl << endl;
-			schedule.printSchedule(0, 3);
-			schedule.printEffectivity();
-		}
-
-		{
-			Schedule schedule(min_queue, 3, singleDay, 1);
-			schedule.fillBins(Schedule::NEXT_FIT);
-
-			cout << "\t\t\tTest 11 - Operationer_3.txt - Next Fit - Min Heap" << endl << endl;
-			schedule.printSchedule(0, 3);
-			schedule.printEffectivity();
-		}
-
-		{
-			Schedule schedule(list, 3, singleDay, 1);
-			schedule.fillBins(Schedule::NEXT_FIT);
-
-			cout << "\t\t\tTest 12 - Operationer_3.txt - Next Fit - Unordered List" << endl << endl;
-			schedule.printSchedule(0, 3);
-			schedule.printEffectivity();
-		}
-
+		makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+		makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+		makeSingleSchedule(&list, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
 
 		//FIRST FIT
-		{
-			Schedule schedule(max_queue, 3, singleDay, 1);
-			schedule.fillBins(Schedule::FIRST_FIT);
-
-			cout << "\t\t\tTest 13 - Operationer_3.txt - First Fit - Max Heap" << endl << endl;
-			schedule.printSchedule(0, 3);
-			schedule.printEffectivity();
-		}
-
-		{
-			Schedule schedule(min_queue, 3, singleDay, 1);
-			schedule.fillBins(Schedule::FIRST_FIT);
-
-			cout << "\t\t\tTest 14 - Operationer_3.txt - First Fit - Min Heap" << endl << endl;
-			schedule.printSchedule(0, 3);
-			schedule.printEffectivity();
-		}
-
-		{
-			Schedule schedule(list, 3, singleDay, 1);
-			schedule.fillBins(Schedule::FIRST_FIT);
-
-			cout << "\t\t\tTest 15 - Operationer_3.txt - First Fit - Unordered List" << endl << endl;
-			schedule.printSchedule(0, 3);
-			schedule.printEffectivity();
-		}
-
+		makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+		makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+		makeSingleSchedule(&list, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
 
 		//BEST FIT
-		{
-			Schedule schedule(max_queue, 3, singleDay, 1);
-			schedule.fillBins(Schedule::BEST_FIT);
+		makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
+		makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
+		makeSingleSchedule(&list, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
+	}*/
 
-			cout << "\t\t\tTest 16 - Operationer_3.txt - Best Fit - Max Heap" << endl << endl;
-			schedule.printSchedule(0, 3);
-			schedule.printEffectivity();
-		}
+	/*fileName = "Operationer_3.txt";
 
-		{
-			Schedule schedule(min_queue, 3, singleDay, 1);
-			schedule.fillBins(Schedule::BEST_FIT);
+	if (readFromFile(fileName, &max_queue) &&
+		readFromFile(fileName, &min_queue) &&
+		readFromFile(fileName, &list)) {
 
-			cout << "\t\t\tTest 17 - Operationer_3.txt - Best Fit - Min Heap" << endl << endl;
-			schedule.printSchedule(0, 3);
-			schedule.printEffectivity();
-		}
+		//NEXT FIT
+		makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+		makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+		makeSingleSchedule(&list, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
 
-		{
-			Schedule schedule(list, 3, singleDay, 1);
-			schedule.fillBins(Schedule::BEST_FIT);
+		//FIRST FIT
+		makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+		makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+		makeSingleSchedule(&list, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
 
-			cout << "\t\t\tTest 18 - Operationer_3.txt - Best Fit - Unordered List" << endl << endl;
-			schedule.printSchedule(0, 3);
-			schedule.printEffectivity();
-		}
+		//BEST FIT
+		makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
+		makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
+		makeSingleSchedule(&list, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
 	}
 
+	fileName = "Operationer_2.txt";
 
-	if (readFromFile("Operationer_2.txt", &max_queue)) {
-		{
-			Schedule schedule(max_queue, 6, doubleDay, 3);
-			schedule.fillBins(Schedule::FIRST_FIT);
+	if (readFromFile(fileName, &max_queue)) {
 
-			cout << "\t\t\tTest 19 - Operationer_2.txt - First Fit - Max Heap" << endl << endl;
-			cout << "Monday:" << endl;
-			schedule.printSchedule(0, 3);
-			cout << endl << "Thuesday:" << endl;
-			schedule.printSchedule(3, 6);
-			schedule.printEffectivity();
-		}
+		//FIRST FIT
+		makeDoubleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 6, doubleDay, 3, testNr, fileName);
 	}
 
-	if (readFromFile("Operationer_3.txt", &max_queue) &&
-		readFromFile("Operationer_3.txt", &min_queue) &&
-		readFromFile("Operationer_3.txt", &list)) {
+	fileName = "Operationer_3.txt";
 
+	if (readFromFile(fileName, &max_queue) &&
+		readFromFile(fileName, &min_queue) &&
+		readFromFile(fileName, &list)) {
 
-			//BEST FIT
-			{
-				Schedule schedule(max_queue, 16, singleDay, 1);
-				schedule.fillBins(Schedule::BEST_FIT);
-
-				cout << "\t\t\tTest 16 - Operationer_3.txt - Best Fit - Max Heap" << endl << endl;
-				schedule.printSchedule(0, 16);
-				schedule.printEffectivity();
-			}
-
-			{
-				Schedule schedule(min_queue, 16, singleDay, 1);
-				schedule.fillBins(Schedule::BEST_FIT);
-
-				cout << "\t\t\tTest 17 - Operationer_3.txt - Best Fit - Min Heap" << endl << endl;
-				schedule.printSchedule(0, 16);
-				schedule.printEffectivity();
-			}
-
-			{
-				Schedule schedule(list, 16, singleDay, 1);
-				schedule.fillBins(Schedule::BEST_FIT);
-
-				cout << "\t\t\tTest 18 - Operationer_3.txt - Best Fit - Unordered List" << endl << endl;
-				schedule.printSchedule(0, 16);
-				schedule.printEffectivity();
-			}
-	}
-
+		//BEST FIT
+		makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::BEST_FIT, 16, singleDay, 1, testNr, fileName);
+		makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::BEST_FIT, 16, singleDay, 1, testNr, fileName);
+		makeSingleSchedule(&list, Schedule::BEST_FIT, 16, singleDay, 1, testNr, fileName);
+	}*/
+	
 	getchar();
 	return EXIT_SUCCESS;
+}
+
+
+/*
+*  emptyPriorityQueue: Dequeues all objects in queue
+*/
+void emptyPriorityQueue(PriorityQueue<Operation>* que) {
+	while (!que->isEmpty()) {
+		que->dequeue();
+	}
+}
+
+
+/*
+*  emptyList: Removes all objects in list
+*/
+void emptyList(List<Operation>* list) {
+	while (list->length() != 0) {
+		list->removeAt(0);
+	}
 }
 
 
@@ -263,6 +164,8 @@ int main() {
 */
 bool readFromFile(const string filename, PriorityQueue<Operation>* que) {
 	bool error = false;
+
+	emptyPriorityQueue(que);
 
 	string read;
 	size_t pos;
@@ -316,6 +219,8 @@ bool readFromFile(const string filename, PriorityQueue<Operation>* que) {
 bool readFromFile(const string filename, List<Operation>* list) {
 	bool error = false;
 
+	emptyList(list);
+
 	string read;
 	size_t pos;
 
@@ -359,4 +264,161 @@ bool readFromFile(const string filename, List<Operation>* list) {
 	}
 
 	return !error;
+}
+
+
+/*
+*  makeSingleScheduleHeap: Creates a single day schedule and outputs result, based on priority queue elements. Returns the schedule for further use.
+*/
+Schedule makeSingleSchedule(const PriorityQueue<Operation>* que, const int heapType, const Schedule::AlgorithmType fitType,
+							const int amountRooms, const int* timeSpan, const int timeSpanLength,
+							int& testNr, const string fileName) {
+	string heapTypeStr = "";
+	string fitTypeStr = "";
+
+	switch (heapType) {
+	case MAX_HEAP:
+		heapTypeStr = "Max Heap";
+		break;
+	case MIN_HEAP:
+		heapTypeStr = "Min Heap";
+		break;
+	}
+
+	switch (fitType) {
+		case Schedule::NEXT_FIT:
+			fitTypeStr = "Next Fit";
+			break;
+		case Schedule::FIRST_FIT:
+			fitTypeStr = "First Fit";
+			break;
+		case Schedule::BEST_FIT:
+			fitTypeStr = "Best Fit";
+			break;
+	}
+	
+	Schedule schedule(*que, amountRooms, timeSpan, timeSpanLength);
+	schedule.fillBins(fitType);
+
+	cout << endl << "\t\t\tTest " << testNr << " - " << fileName << " - " << fitTypeStr << " - " << heapTypeStr << endl << endl;
+	schedule.printSchedule(0, amountRooms);
+	schedule.printEffectivity();
+
+	testNr++;
+
+	return schedule;
+}
+
+/*
+*  makeSingleScheduleList: Creates a single day schedule and outputs result, based on priority list elements. Returns the schedule for further use.
+*/
+Schedule makeSingleSchedule(const List<Operation>* list, const Schedule::AlgorithmType fitType,
+							const int amountRooms, const int* timeSpan, const int timeSpanLength, 
+							int& testNr, const string fileName) {
+	string fitTypeStr = "";
+
+	switch (fitType) {
+	case Schedule::NEXT_FIT:
+		fitTypeStr = "Next Fit";
+		break;
+	case Schedule::FIRST_FIT:
+		fitTypeStr = "First Fit";
+		break;
+	case Schedule::BEST_FIT:
+		fitTypeStr = "Best Fit";
+		break;
+	}
+
+	Schedule schedule(*list, amountRooms, timeSpan, timeSpanLength);
+	schedule.fillBins(fitType);
+
+	cout << endl << "\t\t\tTest " << testNr << " - " << fileName << " - " << fitTypeStr << " - Unordered List" << endl << endl;
+	schedule.printSchedule(0, amountRooms);
+	schedule.printEffectivity();
+
+	testNr++;
+
+	return schedule;
+}
+
+
+/*
+*  makeDoubleScheduleHeap: Creates a single day schedule and outputs result, based on priority queue elements. Returns the schedule for further use.
+*/
+Schedule makeDoubleSchedule(const PriorityQueue<Operation>* que, const int heapType, const Schedule::AlgorithmType fitType,
+							const int amountRooms, const int* timeSpan, const int timeSpanLength,
+							int& testNr, const string fileName) {
+	string heapTypeStr = "";
+	string fitTypeStr = "";
+
+	switch (heapType) {
+	case MAX_HEAP:
+		heapTypeStr = "Max Heap";
+		break;
+	case MIN_HEAP:
+		heapTypeStr = "Min Heap";
+		break;
+	}
+
+	switch (fitType) {
+	case Schedule::NEXT_FIT:
+		fitTypeStr = "Next Fit";
+		break;
+	case Schedule::FIRST_FIT:
+		fitTypeStr = "First Fit";
+		break;
+	case Schedule::BEST_FIT:
+		fitTypeStr = "Best Fit";
+		break;
+	}
+
+	Schedule schedule(*que, amountRooms, timeSpan, timeSpanLength);
+	schedule.fillBins(fitType);
+
+	cout << endl << "\t\t\tTest " << testNr << " - " << fileName << " - " << fitTypeStr << " - " << heapTypeStr << endl << endl;
+	cout << "Monday:" << endl;
+	schedule.printSchedule(0, amountRooms / 2);
+	cout << endl << "Thuesday:" << endl;
+	schedule.printSchedule(amountRooms / 2, amountRooms);
+	schedule.printEffectivity();
+
+	testNr++;
+
+	return schedule;
+}
+
+
+/*
+*  makeDoubleScheduleList: Creates a double day schedule and outputs result, based on priority list elements. Returns the schedule for further use.
+*/
+Schedule makeDoubleSchedule(const List<Operation>* list, const Schedule::AlgorithmType fitType,
+							const int amountRooms, const int* timeSpan, const int timeSpanLength,
+							int& testNr, const string fileName) {
+	string fitTypeStr = "";
+
+	switch (fitType) {
+	case Schedule::NEXT_FIT:
+		fitTypeStr = "Next Fit";
+		break;
+	case Schedule::FIRST_FIT:
+		fitTypeStr = "First Fit";
+		break;
+	case Schedule::BEST_FIT:
+		fitTypeStr = "Best Fit";
+		break;
+	}
+
+	Schedule schedule(*list, amountRooms, timeSpan, timeSpanLength);
+	schedule.fillBins(fitType);
+
+	cout << endl << "\t\t\tTest " << testNr << " - " << fileName << " - " << fitTypeStr << " - Unordered List" << endl << endl;
+	cout << "Monday:" << endl;
+	schedule.printSchedule(0, amountRooms / 2);
+	cout << endl << "Thuesday:" << endl;
+	schedule.printSchedule(amountRooms / 2, amountRooms);
+	schedule.printEffectivity();
+
+	testNr++;
+
+	return schedule;
 }

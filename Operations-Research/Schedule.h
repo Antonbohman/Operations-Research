@@ -12,6 +12,7 @@
 class Schedule {
 private:
 	enum DataType {
+		NO_TYPE,
 		HEAP,
 		LIST
 	};
@@ -41,6 +42,7 @@ public:
 		BEST_FIT
 	};
 
+	Schedule();
 	Schedule(const PriorityQueue<Operation>& _queue, const int _amountRooms = 0, const int* timeSpan = { 0 }, const int timeSpanLength = 1); //ordered operations
 	Schedule(const List<Operation>& _list, const int _amountRooms = 0, const int* timeSpan = { 0 }, const int timeSpanLength = 1); //unordered operations
 	Schedule(const Schedule& origin);
@@ -51,10 +53,10 @@ public:
 	void printSchedule(const int start, const int end) const;
 	void printEffectivity() const;
 
-	Schedule& operator=(const Schedule& origin) = delete;
-	bool operator==(const Schedule& origin) = delete;
-	bool operator!=(const Schedule& origin) = delete;
-	bool operator<(const Schedule& origin) = delete;
-	bool operator>(const Schedule& origin) = delete;
+	Schedule& operator=(const Schedule& origin);
+	bool operator==(const Schedule& origin);
+	bool operator!=(const Schedule& origin);
+	bool operator<(const Schedule& origin);
+	bool operator>(const Schedule& origin);
 
 };

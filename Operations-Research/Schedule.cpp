@@ -1,8 +1,24 @@
 #include "Schedule.h"
 
+Schedule::Schedule() {
+	datatype = DataType::NO_TYPE;
+	totalTime = 0;
+	totalOperation = 0;
+	avaibleTime = 1;
+	bookedTime = 0;
+	bookedOperation = 0;
+	amountRooms = 0;
+	rooms = new Bin[amountRooms];
+}
+
 Schedule::Schedule(const PriorityQueue<Operation>& _queue, const int _amountRooms, const int * timeSpan, const int timeSpanLength)
 {
 	datatype = DataType::HEAP;
+	totalTime = 0;
+	totalOperation = 0;
+	avaibleTime = 1;
+	bookedTime = 0;
+	bookedOperation = 0;
 	queue = _queue;
 	amountRooms = _amountRooms;
 	rooms = new Bin[amountRooms];
@@ -16,6 +32,11 @@ Schedule::Schedule(const PriorityQueue<Operation>& _queue, const int _amountRoom
 Schedule::Schedule(const List<Operation>& _list, const int _amountRooms, const int * timeSpan, const int timeSpanLength)
 {
 	datatype = DataType::LIST;
+	totalTime = 0;
+	totalOperation = 0;
+	avaibleTime = 1;
+	bookedTime = 0;
+	bookedOperation = 0;
 	list = _list;
 	amountRooms = _amountRooms;
 	rooms = new Bin[amountRooms];
@@ -28,9 +49,6 @@ Schedule::Schedule(const List<Operation>& _list, const int _amountRooms, const i
 
 Schedule::Schedule(const Schedule & origin)
 {
-	//free
-	delete[] rooms;
-	//set
 	datatype = origin.datatype;
 	totalTime = origin.totalTime;
 	totalOperation = origin.totalOperation;
@@ -49,6 +67,22 @@ Schedule::Schedule(const Schedule & origin)
 
 Schedule::~Schedule() {
 	delete[] rooms;
+}
+
+bool Schedule::operator==(const Schedule & origin) {
+	return ((float)bookedTime / avaibleTime) == ((float)origin.bookedTime / origin.avaibleTime);
+}
+
+bool Schedule::operator!=(const Schedule & origin) {
+	return ((float)bookedTime / avaibleTime) != ((float)origin.bookedTime / origin.avaibleTime);
+}
+
+bool Schedule::operator<(const Schedule & origin) {
+	return ((float)bookedTime / avaibleTime) < ((float)origin.bookedTime / origin.avaibleTime);
+}
+
+bool Schedule::operator>(const Schedule & origin) {
+	return ((float)bookedTime / avaibleTime) > ((float)origin.bookedTime / origin.avaibleTime);
 }
 
 void Schedule::fillBins(AlgorithmType type) {
@@ -105,12 +139,34 @@ void Schedule::printSchedule(const int start, const int end) const {
 }
 
 void Schedule::printEffectivity() const {
-	int effectiveTime = (int)round(((float)bookedTime / avaibleTime) * 100);
-	cout << endl << "Effective Time: " << to_string(effectiveTime) << "% " << intToTime(bookedTime) << "/" << intToTime(avaibleTime) << endl;
+	float effectiveTime = (float)(((float)bookedTime / avaibleTime) * 100);
+	cout << endl << "Effective Time: " << intToTime(bookedTime) << "/" << intToTime(avaibleTime) << " " << to_string(effectiveTime) << "% " << endl;
 	cout << "Remaining Time: " << intToTime(totalTime-bookedTime) << endl << endl;
 	cout << "Operations: " << bookedOperation << "/" << totalOperation << " | Remaining: " << totalOperation-bookedOperation << endl << endl;
 	cout << "Time to process algorithm: " << to_string(((float)processTime) / CLOCKS_PER_SEC) << "ms" << endl << endl;
-	cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
+	cout << endl << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+}
+
+Schedule & Schedule::operator=(const Schedule & origin) {
+	if (this != &origin) {
+		//free
+		delete[] rooms;
+		//set
+		datatype = origin.datatype;
+		totalTime = origin.totalTime;
+		totalOperation = origin.totalOperation;
+		avaibleTime = origin.avaibleTime;
+		bookedTime = origin.bookedTime;
+		bookedOperation = origin.bookedOperation;
+		queue = origin.queue;
+		list = origin.list;
+		amountRooms = origin.amountRooms;
+		rooms = new Bin[amountRooms];
+		for (int i = 0; i < amountRooms; i++) {
+			rooms[i] = Bin(origin.rooms[i]);
+		}
+	}
+	return *this;
 }
 
 string Schedule::intToTime(const int time) const {
