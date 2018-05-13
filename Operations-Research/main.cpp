@@ -47,93 +47,140 @@ int main() {
 	Schedule currSchedule;
 	Schedule storedSchedule;
 
-	fileName = "Operationer_1a.txt";
+	int option;
 
-	if (readFromFile(fileName, &max_queue) &&
-		readFromFile(fileName, &min_queue) &&
-		readFromFile(fileName, &list)) {
+	//create input option
+	cout << "Select an option:" << endl;
+	cout << "1: Find best schedule example." << endl;
+	cout << "2: Nine methods on a single day schedule." << endl;
+	cout << "3: Nine methods on a single day schedule but with a greater amount of operations." << endl;
+	cout << "4: Same methods but on different operations." << endl;
+	cout << "5: Two days schedule split on same operations" << endl;
+	cout << "6: High amount of data on many rooms." << endl;
+	cout << "Input: ";
 
-		//NEXT FIT
-		currSchedule = makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
-		if (currSchedule > storedSchedule)
-			storedSchedule = currSchedule;
-		currSchedule = makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
-		if (currSchedule > storedSchedule)
-			storedSchedule = currSchedule;
-		currSchedule = makeSingleSchedule(&list, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
-		if (currSchedule > storedSchedule)
-			storedSchedule = currSchedule;
+	cin >> option;
 
-		cout << "\t\t\t\tThe most effective schedule:" << endl << endl;
+	switch (option) {
+		case 1:
+			fileName = "Operationer_1a.txt";
 
-		storedSchedule.printSchedule(0,3);
-		storedSchedule.printEffectivity();
+			if (readFromFile(fileName, &max_queue) &&
+				readFromFile(fileName, &min_queue) &&
+				readFromFile(fileName, &list)) {
+
+				//NEXT FIT
+				currSchedule = makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+				if (currSchedule > storedSchedule)
+					storedSchedule = currSchedule;
+
+				currSchedule = makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+				if (currSchedule > storedSchedule)
+					storedSchedule = currSchedule;
+
+				currSchedule = makeSingleSchedule(&list, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+				if (currSchedule > storedSchedule)
+					storedSchedule = currSchedule;
+
+				cout << "\t\t\t\tThe most effective schedule:" << endl << endl;
+
+				storedSchedule.printSchedule(0, 3);
+				storedSchedule.printEffectivity();
+			}
+			break;
+		case 2:
+			fileName = "Operationer_1a.txt";
+
+			if (readFromFile(fileName, &max_queue) &&
+				readFromFile(fileName, &min_queue) &&
+				readFromFile(fileName, &list)) {
+
+				//NEXT FIT
+				makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+				makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+				makeSingleSchedule(&list, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+
+				//FIRST FIT
+				makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+				makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+				makeSingleSchedule(&list, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+
+				//BEST FIT
+				makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
+				makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
+				makeSingleSchedule(&list, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
+			}
+			break;
+		case 3:
+			fileName = "Operationer_3.txt";
+
+			if (readFromFile(fileName, &max_queue) &&
+				readFromFile(fileName, &min_queue) &&
+				readFromFile(fileName, &list)) {
+
+				//NEXT FIT
+				makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+				makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+				makeSingleSchedule(&list, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+
+				//FIRST FIT
+				makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+				makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+				makeSingleSchedule(&list, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+
+				//BEST FIT
+				makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
+				makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
+				makeSingleSchedule(&list, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
+			}
+			break;
+		case 4:
+			fileName = "Operationer_1a.txt";
+
+			if (readFromFile(fileName, &max_queue) &&
+				readFromFile(fileName, &min_queue)) {
+
+				//FIRST FIT
+				makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+				makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+			}
+
+			fileName = "Operationer_1b.txt";
+
+			if (readFromFile(fileName, &max_queue) &&
+				readFromFile(fileName, &min_queue) &&
+				readFromFile(fileName, &list)) {
+
+				//FIRST FIT
+				makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+				makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+			}
+			break;
+		case 5:
+			fileName = "Operationer_2.txt";
+
+			if (readFromFile(fileName, &max_queue)) {
+
+				//FIRST FIT
+				makeDoubleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 6, doubleDay, 3, testNr, fileName);
+			}
+			break;
+		case 6:
+			fileName = "Operationer_3.txt";
+
+			if (readFromFile(fileName, &max_queue) &&
+				readFromFile(fileName, &min_queue) &&
+				readFromFile(fileName, &list)) {
+
+				//BEST FIT
+				makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::BEST_FIT, 16, singleDay, 1, testNr, fileName);
+				makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::BEST_FIT, 16, singleDay, 1, testNr, fileName);
+				makeSingleSchedule(&list, Schedule::BEST_FIT, 16, singleDay, 1, testNr, fileName);
+			}
+			break;
 	}
-
-	fileName = "Operationer_1a.txt";
-
-	/*if (readFromFile(fileName, &max_queue) &&
-		readFromFile(fileName, &min_queue) &&
-		readFromFile(fileName, &list)) {
-
-		//NEXT FIT
-		makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
-		makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
-		makeSingleSchedule(&list, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
-
-		//FIRST FIT
-		makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
-		makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
-		makeSingleSchedule(&list, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
-
-		//BEST FIT
-		makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
-		makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
-		makeSingleSchedule(&list, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
-	}*/
-
-	/*fileName = "Operationer_3.txt";
-
-	if (readFromFile(fileName, &max_queue) &&
-		readFromFile(fileName, &min_queue) &&
-		readFromFile(fileName, &list)) {
-
-		//NEXT FIT
-		makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
-		makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
-		makeSingleSchedule(&list, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
-
-		//FIRST FIT
-		makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
-		makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
-		makeSingleSchedule(&list, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
-
-		//BEST FIT
-		makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
-		makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
-		makeSingleSchedule(&list, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
-	}
-
-	fileName = "Operationer_2.txt";
-
-	if (readFromFile(fileName, &max_queue)) {
-
-		//FIRST FIT
-		makeDoubleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 6, doubleDay, 3, testNr, fileName);
-	}
-
-	fileName = "Operationer_3.txt";
-
-	if (readFromFile(fileName, &max_queue) &&
-		readFromFile(fileName, &min_queue) &&
-		readFromFile(fileName, &list)) {
-
-		//BEST FIT
-		makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::BEST_FIT, 16, singleDay, 1, testNr, fileName);
-		makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::BEST_FIT, 16, singleDay, 1, testNr, fileName);
-		makeSingleSchedule(&list, Schedule::BEST_FIT, 16, singleDay, 1, testNr, fileName);
-	}*/
 	
+	getchar();
 	getchar();
 	return EXIT_SUCCESS;
 }
