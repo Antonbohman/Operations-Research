@@ -107,7 +107,7 @@ void Schedule::printSchedule(const int start, const int end) const {
 void Schedule::printEffectivity() const {
 	int effectiveTime = (int)round(((float)bookedTime / avaibleTime) * 100);
 	cout << endl << "Effective Time: " << to_string(effectiveTime) << "% " << intToTime(bookedTime) << "/" << intToTime(avaibleTime) << endl;
-	cout << endl << "Remaining Time: " << intToTime(totalTime-bookedTime) << endl;
+	cout << "Remaining Time: " << intToTime(totalTime-bookedTime) << endl << endl;
 	cout << "Operations: " << bookedOperation << "/" << totalOperation << " | Remaining: " << totalOperation-bookedOperation << endl << endl;
 	cout << "Time to process algorithm: " << to_string(((float)processTime) / CLOCKS_PER_SEC) << "ms" << endl << endl;
 	cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
