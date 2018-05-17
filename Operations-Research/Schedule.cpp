@@ -143,7 +143,7 @@ void Schedule::printEffectivity() const {
 	cout << endl << "Effective Time: " << intToTime(bookedTime) << "/" << intToTime(avaibleTime) << " " << to_string(effectiveTime) << "% " << endl;
 	cout << "Remaining Time: " << intToTime(totalTime-bookedTime) << endl << endl;
 	cout << "Operations: " << bookedOperation << "/" << totalOperation << " | Remaining: " << totalOperation-bookedOperation << endl << endl;
-	cout << "Time to process algorithm: " << to_string(((float)processTime) / CLOCKS_PER_SEC) << "ms" << endl << endl;
+	cout << "Time to process algorithm: " << to_string(((float)processTime) / MICRO_PER_SEC) << " sec" << endl << endl;
 	cout << endl << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
 }
 
@@ -192,7 +192,7 @@ void Schedule::nextFit()
 	bookedTime = 0;
 	bookedOperation = 0;
 
-	processTime = clock();
+	chrono::steady_clock::time_point start = chrono::steady_clock::now();
 	int index = 0;
 	int length = list.length();
 	while ((datatype == DataType::HEAP ? !queue.isEmpty() : index < length)) {
@@ -208,7 +208,8 @@ void Schedule::nextFit()
 			}
 		}
 	}
-	processTime = clock() - processTime;
+	chrono::steady_clock::time_point end = chrono::steady_clock::now();
+	processTime = chrono::duration_cast<chrono::microseconds>(end - start).count();
 }
 
 void Schedule::firstFit()
@@ -220,7 +221,7 @@ void Schedule::firstFit()
 	bookedTime = 0;
 	bookedOperation = 0;
 
-	processTime = clock();
+	chrono::steady_clock::time_point start = chrono::steady_clock::now();
 	int index = 0;
 	int length = list.length();
 	while ((datatype == DataType::HEAP ? !queue.isEmpty() : index < length)) {
@@ -235,7 +236,8 @@ void Schedule::firstFit()
 			}
 		}
 	}
-	processTime = clock() - processTime;
+	chrono::steady_clock::time_point end = chrono::steady_clock::now();
+	processTime = chrono::duration_cast<chrono::microseconds>(end - start).count();
 }
 
 void Schedule::bestFit()
@@ -247,7 +249,7 @@ void Schedule::bestFit()
 	bookedTime = 0;
 	bookedOperation = 0;
 
-	processTime = clock();
+	chrono::steady_clock::time_point start = chrono::steady_clock::now();
 	//best fit decreasing
 	int index = 0;
 	int length = list.length();
@@ -270,5 +272,6 @@ void Schedule::bestFit()
 		}
 	}
 
-	processTime = clock() - processTime;
+	chrono::steady_clock::time_point end = chrono::steady_clock::now();
+	processTime = chrono::duration_cast<chrono::microseconds>(end - start).count();
 }

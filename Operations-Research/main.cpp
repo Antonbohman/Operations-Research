@@ -49,7 +49,6 @@ int main() {
 
 	int option;
 
-	//create input option
 	cout << "Select an option:" << endl;
 	cout << "1: Find best schedule example." << endl;
 	cout << "2: Nine methods on a single day schedule." << endl;

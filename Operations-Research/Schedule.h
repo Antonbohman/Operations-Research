@@ -4,10 +4,14 @@
 #include <string>
 #include <windows.h>
 #include <ctime>
+#include <chrono>
 #include <math.h>
 
 #include "Bin.h"
 #include "PriorityQueue.h"
+
+//Microsecond per second
+#define MICRO_PER_SEC ((clock_t)1000000)
 
 class Schedule {
 private:
