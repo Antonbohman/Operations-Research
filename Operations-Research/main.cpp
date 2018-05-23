@@ -158,10 +158,14 @@ int main() {
 		case 5:
 			fileName = "Operationer_2.txt";
 
-			if (readFromFile(fileName, &max_queue)) {
+			if (readFromFile(fileName, &max_queue) &&
+				readFromFile(fileName, &min_queue) &&
+				readFromFile(fileName, &list)) {
 
 				//FIRST FIT
 				makeDoubleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 6, doubleDay, 3, testNr, fileName);
+				makeDoubleSchedule(&min_queue, MIN_HEAP, Schedule::FIRST_FIT, 6, doubleDay, 3, testNr, fileName);
+				makeDoubleSchedule(&list, Schedule::FIRST_FIT, 6, doubleDay, 3, testNr, fileName);
 			}
 			break;
 		case 6:

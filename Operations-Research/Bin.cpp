@@ -9,6 +9,8 @@ Bin::Bin(const Bin & origin) {
 	schedule = origin.schedule;
 }
 
+
+
 Bin::~Bin() {
 }
 

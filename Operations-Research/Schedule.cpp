@@ -129,9 +129,11 @@ void Schedule::printSchedule(const int start, const int end) const {
 
 			schedule = rooms[i].collectOperations();
 			cout << "\t ";
-			cout << schedule.getAt(0).getID();
-			for (int j = 1; j < schedule.length(); j++) {
-				cout << "," << schedule.getAt(j).getID();
+			if (schedule.length() > 0) {
+				cout << schedule.getAt(0).getID();
+				for (int j = 1; j < schedule.length(); j++) {
+					cout << "," << schedule.getAt(j).getID();
+				}
 			}
 			cout << endl;
 		}
@@ -263,6 +265,7 @@ void Schedule::bestFit()
 		for (int i = 0; i < amountRooms; i++) {
 			if (rooms[i].remainingSize() - curr.getTime() < minValue && rooms[i].remainingSize() - curr.getTime() >= 0) {
 				minIndex = i;
+				minValue = rooms[i].remainingSize() - curr.getTime();
 			}
 		}
 		if (minIndex != -1) {
