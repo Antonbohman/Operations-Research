@@ -262,10 +262,13 @@ void Schedule::bestFit()
 
 		int minIndex = -1;
 		int minValue = INT_MAX;
+		int tempValue = 0;
+
 		for (int i = 0; i < amountRooms; i++) {
-			if (rooms[i].remainingSize() - curr.getTime() < minValue && rooms[i].remainingSize() - curr.getTime() >= 0) {
+			tempValue = rooms[i].remainingSize() - curr.getTime();
+			if (tempValue < minValue && tempValue >= 0) {
 				minIndex = i;
-				minValue = rooms[i].remainingSize() - curr.getTime();
+				minValue = tempValue;
 			}
 		}
 		if (minIndex != -1) {
