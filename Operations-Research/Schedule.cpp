@@ -193,12 +193,15 @@ void Schedule::nextFit()
 	bookedOperation = 0;
 
 	chrono::steady_clock::time_point start = chrono::steady_clock::now();
+
 	int index = 0;
 	int length = list.length();
+
 	while ((datatype == DataType::HEAP ? !queue.isEmpty() : index < length)) {
 		curr = (datatype == DataType::HEAP ? queue.dequeue() : list.getAt(index++));
 		totalTime += curr.getTime();
 		totalOperation++;
+
 		for (int i = currentRoom; i < amountRooms; i++) {
 			currentRoom = i;
 			if (rooms[i].addOperation(curr)) {
@@ -208,6 +211,7 @@ void Schedule::nextFit()
 			}
 		}
 	}
+
 	chrono::steady_clock::time_point end = chrono::steady_clock::now();
 	processTime = chrono::duration_cast<chrono::microseconds>(end - start).count();
 }
@@ -222,12 +226,15 @@ void Schedule::firstFit()
 	bookedOperation = 0;
 
 	chrono::steady_clock::time_point start = chrono::steady_clock::now();
+
 	int index = 0;
 	int length = list.length();
+
 	while ((datatype == DataType::HEAP ? !queue.isEmpty() : index < length)) {
 		curr = (datatype == DataType::HEAP ? queue.dequeue() : list.getAt(index++));
 		totalTime += curr.getTime();
 		totalOperation++;
+
 		for (int i = 0; i < amountRooms; i++) {
 			if (rooms[i].addOperation(curr)) {
 				i = amountRooms;	//break
@@ -250,9 +257,10 @@ void Schedule::bestFit()
 	bookedOperation = 0;
 
 	chrono::steady_clock::time_point start = chrono::steady_clock::now();
-	//best fit decreasing
+
 	int index = 0;
 	int length = list.length();
+	
 	while ((datatype == DataType::HEAP ? !queue.isEmpty() : index < length)) {
 		curr = (datatype == DataType::HEAP ? queue.dequeue() : list.getAt(index++));
 		totalTime += curr.getTime();
@@ -260,11 +268,16 @@ void Schedule::bestFit()
 
 		int minIndex = -1;
 		int minValue = INT_MAX;
+		int tempValue = 0;
+
 		for (int i = 0; i < amountRooms; i++) {
-			if (rooms[i].remainingSize() - curr.getTime() < minValue && rooms[i].remainingSize() - curr.getTime() >= 0) {
+			tempValue = rooms[i].remainingSize() - curr.getTime();
+			if (tempValue < minValue && tempValue >= 0) {
 				minIndex = i;
+				minValue = tempValue;
 			}
 		}
+
 		if (minIndex != -1) {
 			rooms[minIndex].addOperation(curr);
 			bookedTime += curr.getTime();
