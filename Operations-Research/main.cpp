@@ -54,13 +54,13 @@ int main() {
 	int option;
 
 	cout << "Select an option:" << endl;
-	cout << "1: Find best schedule example." << endl;
+	cout << "1: Find the best schedule between min-heap, max-heap and unsorted list." << endl;
 	cout << "2: Nine methods on a single day schedule." << endl;
 	cout << "3: Nine methods on a single day schedule but with a greater amount of operations." << endl;
-	cout << "4: Same methods but on different operations." << endl;
+	cout << "4: Same method but on different operations." << endl;
 	cout << "5: Two days schedule split on same operations" << endl;
 	cout << "6: High amount of data on many rooms." << endl;
-	cout << "7: Best output for first 2 files." << endl;
+	cout << "7: Randomize the data input order 1000 times, and try to find a better schedule for each randomizing." << endl;
 	cout << "Input: ";
 
 	cin >> option;
@@ -191,13 +191,14 @@ int main() {
 			makeSingleSchedule(&list, Schedule::BEST_FIT, 16, singleDay, 1, testNr, fileName);
 		}
 		break;
+		/* Test case for randomization of data input (1000 tries) */
 	case 7:
-		string fileNames[3] = {
+		string fileNames[2] = {
 			string("Operationer_1a.txt"),
 			string("Operationer_1b.txt")
 		};
 
-		int tries = 100;
+		int tries = 1000;
 		int rooms = 3;
 
 		TCHAR c;
@@ -219,7 +220,7 @@ int main() {
 				float bestEff = 0;
 				Schedule best;
 
-				cout << "Loading: " << "000" << "%" << endl;
+				cout << "Randomizing: 000%" << endl;
 
 				for (int i = 0; i < tries; i++) {
 					copy = list;
@@ -239,18 +240,18 @@ int main() {
 					hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 					if (hStdOut != INVALID_HANDLE_VALUE) {
 						c = (procent / 100) + '0';
-						coords.X = 9;
+						coords.X = 13;
 						FillConsoleOutputCharacter(hStdOut, c, 1, coords, &count);
 						c = (procent / 10 % 10) + '0';
-						coords.X = 10;
+						coords.X = 14;
 						FillConsoleOutputCharacter(hStdOut, c, 1, coords, &count);
 						c = (procent % 10) + '0';
-						coords.X = 11;
+						coords.X = 15;
 						FillConsoleOutputCharacter(hStdOut, c, 1, coords, &count);
 					}
 				}
 
-				coords.Y += 17+(2*rooms);
+				coords.Y += 18 + (2 * rooms);
 
 				generalEff /= tries;
 
@@ -258,9 +259,11 @@ int main() {
 				processTime = chrono::duration_cast<chrono::microseconds>(end - start).count();
 
 				//print
-				cout << endl << "\t\t\tTest" << " - " << fileNames[f] << " - " << "First fit" << " - Magic List : Time: " << to_string(((float)processTime) / MICRO_PER_SEC) << endl << endl;
+				cout << endl << "Time to randomize: " << to_string(((float)processTime) / MICRO_PER_SEC) << endl;
+				cout << "Average effective time: " << (generalEff * 100) << "%" << endl << endl;
+
+				cout << endl << "\t\t\tTest " << (f + 1) << " - " << fileNames[f] << " - " << "First fit" << " - Magic List" << endl;
 				best.printSchedule(0, rooms);
-				cout << "\nGeneral effective time: " << (generalEff * 100) << "%" << endl;
 				best.printEffectivity();
 			}
 		}

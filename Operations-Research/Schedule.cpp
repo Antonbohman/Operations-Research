@@ -7,6 +7,7 @@ Schedule::Schedule() {
 	avaibleTime = 0;
 	bookedTime = 0;
 	bookedOperation = 0;
+	processTime = 0;
 	amountRooms = 0;
 	rooms = new Bin[amountRooms];
 }
@@ -18,6 +19,7 @@ Schedule::Schedule(const PriorityQueue<Operation>& _queue, const int _amountRoom
 	avaibleTime = 0;
 	bookedTime = 0;
 	bookedOperation = 0;
+	processTime = 0;
 	queue = _queue;
 	amountRooms = _amountRooms;
 	rooms = new Bin[amountRooms];
@@ -34,6 +36,7 @@ Schedule::Schedule(const List<Operation>& _list, const int _amountRooms, const i
 	avaibleTime = 0;
 	bookedTime = 0;
 	bookedOperation = 0;
+	processTime = 0;
 	list = _list;
 	amountRooms = _amountRooms;
 	rooms = new Bin[amountRooms];
@@ -50,6 +53,7 @@ Schedule::Schedule(const Schedule & origin) {
 	avaibleTime = origin.avaibleTime;
 	bookedTime = origin.bookedTime;
 	bookedOperation = origin.bookedOperation;
+	processTime = origin.processTime;
 	queue = origin.queue;
 	list = origin.list;
 	amountRooms = origin.amountRooms;
@@ -158,6 +162,7 @@ Schedule & Schedule::operator=(const Schedule & origin) {
 		avaibleTime = origin.avaibleTime;
 		bookedTime = origin.bookedTime;
 		bookedOperation = origin.bookedOperation;
+		processTime = origin.processTime;
 		queue = origin.queue;
 		list = origin.list;
 		amountRooms = origin.amountRooms;
@@ -268,6 +273,7 @@ void Schedule::firstFit() {
 			}
 		}
 	}
+
 	chrono::steady_clock::time_point end = chrono::steady_clock::now();
 	processTime = chrono::duration_cast<chrono::microseconds>(end - start).count();
 }
