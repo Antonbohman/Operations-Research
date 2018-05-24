@@ -4,7 +4,7 @@ Schedule::Schedule() {
 	datatype = DataType::NO_TYPE;
 	totalTime = 0;
 	totalOperation = 0;
-	avaibleTime = 1;
+	avaibleTime = 0;
 	bookedTime = 0;
 	bookedOperation = 0;
 	amountRooms = 0;
@@ -16,7 +16,7 @@ Schedule::Schedule(const PriorityQueue<Operation>& _queue, const int _amountRoom
 	datatype = DataType::HEAP;
 	totalTime = 0;
 	totalOperation = 0;
-	avaibleTime = 1;
+	avaibleTime = 0;
 	bookedTime = 0;
 	bookedOperation = 0;
 	queue = _queue;
@@ -34,7 +34,7 @@ Schedule::Schedule(const List<Operation>& _list, const int _amountRooms, const i
 	datatype = DataType::LIST;
 	totalTime = 0;
 	totalOperation = 0;
-	avaibleTime = 1;
+	avaibleTime = 0;
 	bookedTime = 0;
 	bookedOperation = 0;
 	list = _list;
