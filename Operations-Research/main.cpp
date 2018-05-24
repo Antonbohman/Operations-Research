@@ -8,6 +8,8 @@
 
 using namespace std;
 
+void randomizeList(List<Operation>& list);
+
 void emptyPriorityQueue(PriorityQueue<Operation>* que);
 void emptyList(List<Operation>* list);
 
@@ -34,6 +36,7 @@ Schedule makeDoubleSchedule(const List<Operation>* list, const Schedule::Algorit
 *  main: Starting point
 */
 int main() {
+	srand(time(NULL));
 	PriorityQueue<Operation> max_queue(MAX_HEAP);
 	PriorityQueue<Operation> min_queue(MIN_HEAP);
 	List<Operation> list;
@@ -56,6 +59,7 @@ int main() {
 	cout << "4: Same methods but on different operations." << endl;
 	cout << "5: Two days schedule split on same operations" << endl;
 	cout << "6: High amount of data on many rooms." << endl;
+	cout << "7: Best output for first 2 files." << endl;
 	cout << "Input: ";
 
 	cin >> option;
@@ -181,6 +185,48 @@ int main() {
 				makeSingleSchedule(&list, Schedule::BEST_FIT, 16, singleDay, 1, testNr, fileName);
 			}
 			break;
+		case 7:
+			string fileNames[3] = {
+				string("Operationer_1a.txt"),
+				string("Operationer_1b.txt")
+			};
+			int tries = 100;
+			int rooms = 3;
+
+			for (int f = 0; f < 2; f++)
+			{
+				clock_t processTime;
+				float generalEff = 0;
+				chrono::steady_clock::time_point start = chrono::steady_clock::now();
+				if (readFromFile(fileNames[f], &list)) {
+					List<Operation> copy;
+					float bestEff = 0;
+					Schedule best;
+					for (int i = 0; i < tries; i++) {
+						copy = list;
+						randomizeList(copy);
+						Schedule schedule(copy, rooms, singleDay);
+						schedule.fillBins(Schedule::FIRST_FIT);
+						float eff = schedule.getEffectivity();
+						generalEff += eff;
+						if (eff > bestEff) {
+							bestEff = eff;
+							best = schedule;
+						}
+						cout << (int)(((float)i / tries) * 100) << "%" <<  endl;
+					}
+					generalEff /= tries;
+					chrono::steady_clock::time_point end = chrono::steady_clock::now();
+					processTime = chrono::duration_cast<chrono::microseconds>(end - start).count();
+					//print
+					cout << endl << "\t\t\tTest" << " - " << fileNames[f] << " - " << "First fit" << " - Magic List : Time: " << to_string(((float)processTime) / MICRO_PER_SEC) << endl << endl;
+					best.printSchedule(0, rooms);
+					cout << "\nGeneral effective time: " << (generalEff * 100) << "%" << endl;
+					best.printEffectivity();
+				}
+			}
+
+			break;
 	}
 	
 	getchar();
@@ -188,6 +234,20 @@ int main() {
 	return EXIT_SUCCESS;
 }
 
+/*
+*	randomise list for THE ULTIMATE ALGORITHM!! :P
+*/
+void randomizeList(List<Operation>& list)
+{
+	int length = list.length();
+	Operation temp;
+	for (int i = 0; i < length; i++)
+	{
+		temp = list.getAt(i);
+		list.removeAt(i);
+		list.insertAt(rand()%length,temp);
+	}
+}
 
 /*
 *  emptyPriorityQueue: Dequeues all objects in queue

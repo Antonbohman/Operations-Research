@@ -56,6 +56,7 @@ public:
 
 	void printSchedule(const int start, const int end) const;
 	void printEffectivity() const;
+	float getEffectivity();
 
 	Schedule& operator=(const Schedule& origin);
 	bool operator==(const Schedule& origin);

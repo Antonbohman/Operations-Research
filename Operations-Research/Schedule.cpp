@@ -149,6 +149,11 @@ void Schedule::printEffectivity() const {
 	cout << endl << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
 }
 
+float Schedule::getEffectivity()
+{
+	return ((float)bookedTime/ avaibleTime);
+}
+
 Schedule & Schedule::operator=(const Schedule & origin) {
 	if (this != &origin) {
 		//free
@@ -223,6 +228,33 @@ void Schedule::firstFit()
 	bookedTime = 0;
 	bookedOperation = 0;
 
+	//int index = 0;
+	//int length = list.length();
+	////operations to ordinary list, faster algorithm
+	//Operation* arr = new Operation[length];
+	//for (int i = 0; i < length; i++)
+	//{
+	//	if (datatype == DataType::HEAP) arr[i] = queue.dequeue();
+	//	else arr[i] = list.getAt(i);
+	//}
+	//chrono::steady_clock::time_point start = chrono::steady_clock::now();
+	////algorithm
+	//for(int i = 0; i < length; i++){
+	//	curr = arr[i];
+	//	totalTime += curr.getTime();
+	//	totalOperation++;
+	//	for (int i = 0; i < amountRooms; i++) {
+	//		if (rooms[i].addOperation(curr)) {
+	//			i = amountRooms;	//break
+	//			bookedTime += curr.getTime();
+	//			bookedOperation++;
+	//		}
+	//	}
+	//}
+	//delete[] arr;
+	//chrono::steady_clock::time_point end = chrono::steady_clock::now();
+	//processTime = chrono::duration_cast<chrono::microseconds>(end - start).count();
+
 	chrono::steady_clock::time_point start = chrono::steady_clock::now();
 	int index = 0;
 	int length = list.length();
@@ -231,7 +263,7 @@ void Schedule::firstFit()
 		totalTime += curr.getTime();
 		totalOperation++;
 		for (int i = 0; i < amountRooms; i++) {
-			if (rooms[i].addOperation(curr)) {
+			if (rooms[i].addOperation(curr)) {//Lägger till om kan. Lägger max in 1 för alla 3 bins.
 				i = amountRooms;	//break
 				bookedTime += curr.getTime();
 				bookedOperation++;
