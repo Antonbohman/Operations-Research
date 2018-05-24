@@ -195,7 +195,7 @@ int main() {
 				string("Operationer_1a.txt"),
 				string("Operationer_1b.txt")
 			};
-			int tries = 100;
+			int tries = 1000;
 			int rooms = 3;
 
 			for (int f = 0; f < 2; f++)
@@ -207,11 +207,13 @@ int main() {
 					List<Operation> copy;
 					float bestEff = 0;
 					Schedule best;
+					//try a couple of times
 					for (int i = 0; i < tries; i++) {
-						copy = list;
-						randomizeList(copy);
+						copy = list;//copy
+						randomizeList(copy);//randomise
 						Schedule schedule(copy, rooms, singleDay);
-						schedule.fillBins(Schedule::FIRST_FIT);
+						schedule.fillBins(Schedule::FIRST_FIT);//fill bins
+						//get best effectivity
 						float eff = schedule.getEffectivity();
 						generalEff += eff;
 						if (eff > bestEff) {
