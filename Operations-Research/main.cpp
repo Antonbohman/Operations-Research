@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <windows.h>
 
 #include "PriorityQueue.h"
 #include "List.h"
@@ -17,20 +18,20 @@ bool readFromFile(const string filename, PriorityQueue<Operation>* que);
 bool readFromFile(const string filename, List<Operation>* list);
 
 Schedule makeSingleSchedule(const PriorityQueue<Operation>* que, const int heapType, const Schedule::AlgorithmType fitType,
-							const int amountRooms, const int* timeSpan, const int timeSpanLength,
-							int& testNr, const string fileName);
+	const int amountRooms, const int* timeSpan, const int timeSpanLength,
+	int& testNr, const string fileName);
 
 Schedule makeSingleSchedule(const List<Operation>* list, const Schedule::AlgorithmType fitType,
-							const int amountRooms, const int* timeSpan, const int timeSpanLength,
-							int& testNr, const string fileName);
+	const int amountRooms, const int* timeSpan, const int timeSpanLength,
+	int& testNr, const string fileName);
 
 Schedule makeDoubleSchedule(const PriorityQueue<Operation>* que, const int heapType, const Schedule::AlgorithmType fitType,
-							const int amountRooms, const int* timeSpan, const int timeSpanLength,
-							int& testNr, const string fileName);
+	const int amountRooms, const int* timeSpan, const int timeSpanLength,
+	int& testNr, const string fileName);
 
 Schedule makeDoubleSchedule(const List<Operation>* list, const Schedule::AlgorithmType fitType,
-							const int amountRooms, const int* timeSpan, const int timeSpanLength,
-							int& testNr, const string fileName);
+	const int amountRooms, const int* timeSpan, const int timeSpanLength,
+	int& testNr, const string fileName);
 
 /*
 *  main: Starting point
@@ -66,193 +67,223 @@ int main() {
 
 	switch (option) {
 		/* Test case for finding the best schedule creation with 3 different sorted datastreams*/
-		case 1:
-			fileName = "Operationer_1a.txt";
+	case 1:
+		fileName = "Operationer_1a.txt";
 
-			if (readFromFile(fileName, &max_queue) &&
-				readFromFile(fileName, &min_queue) &&
-				readFromFile(fileName, &list)) {
+		if (readFromFile(fileName, &max_queue) &&
+			readFromFile(fileName, &min_queue) &&
+			readFromFile(fileName, &list)) {
 
-				//NEXT FIT
-				currSchedule = makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
-				if (currSchedule > storedSchedule)
-					storedSchedule = currSchedule;
+			//NEXT FIT
+			currSchedule = makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+			if (currSchedule > storedSchedule)
+				storedSchedule = currSchedule;
 
-				currSchedule = makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
-				if (currSchedule > storedSchedule)
-					storedSchedule = currSchedule;
+			currSchedule = makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+			if (currSchedule > storedSchedule)
+				storedSchedule = currSchedule;
 
-				currSchedule = makeSingleSchedule(&list, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
-				if (currSchedule > storedSchedule)
-					storedSchedule = currSchedule;
+			currSchedule = makeSingleSchedule(&list, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+			if (currSchedule > storedSchedule)
+				storedSchedule = currSchedule;
 
-				cout << "\t\t\t\tThe most effective schedule:" << endl << endl;
+			cout << "\t\t\t\tThe most effective schedule:" << endl << endl;
 
-				storedSchedule.printSchedule(0, 3);
-				storedSchedule.printEffectivity();
-			}
-			break;
+			storedSchedule.printSchedule(0, 3);
+			storedSchedule.printEffectivity();
+		}
+		break;
 		/* Test case for testing all 3 algorithms with 3 different sorted datastream for one day schedule (a total of 9 test for same data) */
-		case 2:
-			fileName = "Operationer_1a.txt";
+	case 2:
+		fileName = "Operationer_1a.txt";
 
-			if (readFromFile(fileName, &max_queue) &&
-				readFromFile(fileName, &min_queue) &&
-				readFromFile(fileName, &list)) {
+		if (readFromFile(fileName, &max_queue) &&
+			readFromFile(fileName, &min_queue) &&
+			readFromFile(fileName, &list)) {
 
-				//NEXT FIT
-				makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
-				makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
-				makeSingleSchedule(&list, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+			//NEXT FIT
+			makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+			makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+			makeSingleSchedule(&list, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
 
-				//FIRST FIT
-				makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
-				makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
-				makeSingleSchedule(&list, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+			//FIRST FIT
+			makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+			makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+			makeSingleSchedule(&list, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
 
-				//BEST FIT
-				makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
-				makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
-				makeSingleSchedule(&list, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
-			}
-			break;
+			//BEST FIT
+			makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
+			makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
+			makeSingleSchedule(&list, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
+		}
+		break;
 		/* Same test case as case 2 but with greater amount of data (heavy duty test) */
-		case 3:
-			fileName = "Operationer_3.txt";
+	case 3:
+		fileName = "Operationer_3.txt";
 
-			if (readFromFile(fileName, &max_queue) &&
-				readFromFile(fileName, &min_queue) &&
-				readFromFile(fileName, &list)) {
+		if (readFromFile(fileName, &max_queue) &&
+			readFromFile(fileName, &min_queue) &&
+			readFromFile(fileName, &list)) {
 
-				//NEXT FIT
-				makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
-				makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
-				makeSingleSchedule(&list, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+			//NEXT FIT
+			makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+			makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
+			makeSingleSchedule(&list, Schedule::NEXT_FIT, 3, singleDay, 1, testNr, fileName);
 
-				//FIRST FIT
-				makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
-				makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
-				makeSingleSchedule(&list, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+			//FIRST FIT
+			makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+			makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+			makeSingleSchedule(&list, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
 
-				//BEST FIT
-				makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
-				makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
-				makeSingleSchedule(&list, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
-			}
-			break;
+			//BEST FIT
+			makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
+			makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
+			makeSingleSchedule(&list, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
+		}
+		break;
 		/* Test case with same algorithm but with different datastreams */
-		case 4:
-			fileName = "Operationer_1a.txt";
+	case 4:
+		fileName = "Operationer_1a.txt";
 
-			if (readFromFile(fileName, &max_queue) &&
-				readFromFile(fileName, &min_queue)) {
+		if (readFromFile(fileName, &max_queue) &&
+			readFromFile(fileName, &min_queue)) {
 
-				//FIRST FIT
-				makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
-				makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
-			}
+			//FIRST FIT
+			makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+			makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+		}
 
-			fileName = "Operationer_1b.txt";
+		fileName = "Operationer_1b.txt";
 
-			if (readFromFile(fileName, &max_queue) &&
-				readFromFile(fileName, &min_queue)) {
+		if (readFromFile(fileName, &max_queue) &&
+			readFromFile(fileName, &min_queue)) {
 
-				//FIRST FIT
-				makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
-				makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
-			}
-			break;
+			//FIRST FIT
+			makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+			makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
+		}
+		break;
 		/* Test case with a double day schedule */
-		case 5:
-			fileName = "Operationer_2.txt";
+	case 5:
+		fileName = "Operationer_2.txt";
 
-			if (readFromFile(fileName, &max_queue) &&
-				readFromFile(fileName, &min_queue) &&
-				readFromFile(fileName, &list)) {
+		if (readFromFile(fileName, &max_queue) &&
+			readFromFile(fileName, &min_queue) &&
+			readFromFile(fileName, &list)) {
 
-				//FIRST FIT
-				makeDoubleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 6, doubleDay, 3, testNr, fileName);
-				makeDoubleSchedule(&min_queue, MIN_HEAP, Schedule::FIRST_FIT, 6, doubleDay, 3, testNr, fileName);
-				makeDoubleSchedule(&list, Schedule::FIRST_FIT, 6, doubleDay, 3, testNr, fileName);
-			}
-			break;
+			//FIRST FIT
+			makeDoubleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 6, doubleDay, 3, testNr, fileName);
+			makeDoubleSchedule(&min_queue, MIN_HEAP, Schedule::FIRST_FIT, 6, doubleDay, 3, testNr, fileName);
+			makeDoubleSchedule(&list, Schedule::FIRST_FIT, 6, doubleDay, 3, testNr, fileName);
+		}
+		break;
 		/* Test case with high amount of data on several rooms(16) */
-		case 6:
-			fileName = "Operationer_3.txt";
+	case 6:
+		fileName = "Operationer_3.txt";
 
-			if (readFromFile(fileName, &max_queue) &&
-				readFromFile(fileName, &min_queue) &&
-				readFromFile(fileName, &list)) {
+		if (readFromFile(fileName, &max_queue) &&
+			readFromFile(fileName, &min_queue) &&
+			readFromFile(fileName, &list)) {
 
-				//BEST FIT
-				makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::BEST_FIT, 16, singleDay, 1, testNr, fileName);
-				makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::BEST_FIT, 16, singleDay, 1, testNr, fileName);
-				makeSingleSchedule(&list, Schedule::BEST_FIT, 16, singleDay, 1, testNr, fileName);
-			}
-			break;
-		case 7:
-			string fileNames[3] = {
-				string("Operationer_1a.txt"),
-				string("Operationer_1b.txt")
-			};
-			int tries = 1000;
-			int rooms = 3;
+			//BEST FIT
+			makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::BEST_FIT, 16, singleDay, 1, testNr, fileName);
+			makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::BEST_FIT, 16, singleDay, 1, testNr, fileName);
+			makeSingleSchedule(&list, Schedule::BEST_FIT, 16, singleDay, 1, testNr, fileName);
+		}
+		break;
+	case 7:
+		string fileNames[3] = {
+			string("Operationer_1a.txt"),
+			string("Operationer_1b.txt")
+		};
 
-			for (int f = 0; f < 2; f++)
-			{
-				clock_t processTime;
-				float generalEff = 0;
-				chrono::steady_clock::time_point start = chrono::steady_clock::now();
-				if (readFromFile(fileNames[f], &list)) {
-					List<Operation> copy;
-					float bestEff = 0;
-					Schedule best;
-					//try a couple of times
-					for (int i = 0; i < tries; i++) {
-						copy = list;//copy
-						randomizeList(copy);//randomise
-						Schedule schedule(copy, rooms, singleDay);
-						schedule.fillBins(Schedule::FIRST_FIT);//fill bins
-						//get best effectivity
-						float eff = schedule.getEffectivity();
-						generalEff += eff;
-						if (eff > bestEff) {
-							bestEff = eff;
-							best = schedule;
-						}
-						cout << (int)(((float)i / tries) * 100) << "%" <<  endl;
+		int tries = 100;
+		int rooms = 3;
+
+		TCHAR c;
+		HANDLE hStdOut;
+		DWORD count;
+		COORD coords = { 0, 10 };
+		int procent;
+
+		cout << endl;
+
+		for (int f = 0; f < 2; f++) {
+			clock_t processTime;
+			float generalEff = 0;
+
+			chrono::steady_clock::time_point start = chrono::steady_clock::now();
+
+			if (readFromFile(fileNames[f], &list)) {
+				List<Operation> copy;
+				float bestEff = 0;
+				Schedule best;
+
+				cout << "Loading: " << "000" << "%" << endl;
+
+				for (int i = 0; i < tries; i++) {
+					copy = list;
+					randomizeList(copy);
+					Schedule schedule(copy, rooms, singleDay);
+					schedule.fillBins(Schedule::FIRST_FIT);
+					float eff = schedule.getEffectivity();
+					generalEff += eff;
+
+					if (eff > bestEff) {
+						bestEff = eff;
+						best = schedule;
 					}
-					generalEff /= tries;
-					chrono::steady_clock::time_point end = chrono::steady_clock::now();
-					processTime = chrono::duration_cast<chrono::microseconds>(end - start).count();
-					//print
-					cout << endl << "\t\t\tTest" << " - " << fileNames[f] << " - " << "First fit" << " - Magic List : Time: " << to_string(((float)processTime) / MICRO_PER_SEC) << endl << endl;
-					best.printSchedule(0, rooms);
-					cout << "\nGeneral effective time: " << (generalEff * 100) << "%" << endl;
-					best.printEffectivity();
-				}
-			}
 
-			break;
+					procent = (int)(((float)i / (tries - 1)) * 100);
+
+					hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+					if (hStdOut != INVALID_HANDLE_VALUE) {
+						c = (procent / 100) + '0';
+						coords.X = 9;
+						FillConsoleOutputCharacter(hStdOut, c, 1, coords, &count);
+						c = (procent / 10 % 10) + '0';
+						coords.X = 10;
+						FillConsoleOutputCharacter(hStdOut, c, 1, coords, &count);
+						c = (procent % 10) + '0';
+						coords.X = 11;
+						FillConsoleOutputCharacter(hStdOut, c, 1, coords, &count);
+					}
+				}
+
+				coords.Y += 17+(2*rooms);
+
+				generalEff /= tries;
+
+				chrono::steady_clock::time_point end = chrono::steady_clock::now();
+				processTime = chrono::duration_cast<chrono::microseconds>(end - start).count();
+
+				//print
+				cout << endl << "\t\t\tTest" << " - " << fileNames[f] << " - " << "First fit" << " - Magic List : Time: " << to_string(((float)processTime) / MICRO_PER_SEC) << endl << endl;
+				best.printSchedule(0, rooms);
+				cout << "\nGeneral effective time: " << (generalEff * 100) << "%" << endl;
+				best.printEffectivity();
+			}
+		}
+
+		break;
 	}
-	
+
 	getchar();
 	getchar();
 	return EXIT_SUCCESS;
 }
 
 /*
-*	randomise list for THE ULTIMATE ALGORITHM!! :P
+*	randomizeList: Randomise list for THE ULTIMATE ALGORITHM!! :P
 */
-void randomizeList(List<Operation>& list)
-{
+void randomizeList(List<Operation>& list) {
 	int length = list.length();
 	Operation temp;
-	for (int i = 0; i < length; i++)
-	{
+
+	for (int i = 0; i < length; i++) {
 		temp = list.getAt(i);
 		list.removeAt(i);
-		list.insertAt(rand()%length,temp);
+		list.insertAt(rand() % length, temp);
 	}
 }
 
@@ -388,8 +419,8 @@ bool readFromFile(const string filename, List<Operation>* list) {
 *  makeSingleScheduleHeap: Creates a single day schedule and outputs result, based on priority queue elements. Returns the schedule for further use.
 */
 Schedule makeSingleSchedule(const PriorityQueue<Operation>* que, const int heapType, const Schedule::AlgorithmType fitType,
-							const int amountRooms, const int* timeSpan, const int timeSpanLength,
-							int& testNr, const string fileName) {
+	const int amountRooms, const int* timeSpan, const int timeSpanLength,
+	int& testNr, const string fileName) {
 	string heapTypeStr = "";
 	string fitTypeStr = "";
 
@@ -403,17 +434,17 @@ Schedule makeSingleSchedule(const PriorityQueue<Operation>* que, const int heapT
 	}
 
 	switch (fitType) {
-		case Schedule::NEXT_FIT:
-			fitTypeStr = "Next Fit";
-			break;
-		case Schedule::FIRST_FIT:
-			fitTypeStr = "First Fit";
-			break;
-		case Schedule::BEST_FIT:
-			fitTypeStr = "Best Fit";
-			break;
+	case Schedule::NEXT_FIT:
+		fitTypeStr = "Next Fit";
+		break;
+	case Schedule::FIRST_FIT:
+		fitTypeStr = "First Fit";
+		break;
+	case Schedule::BEST_FIT:
+		fitTypeStr = "Best Fit";
+		break;
 	}
-	
+
 	Schedule schedule(*que, amountRooms, timeSpan, timeSpanLength);
 	schedule.fillBins(fitType);
 
@@ -430,8 +461,8 @@ Schedule makeSingleSchedule(const PriorityQueue<Operation>* que, const int heapT
 *  makeSingleScheduleList: Creates a single day schedule and outputs result, based on priority list elements. Returns the schedule for further use.
 */
 Schedule makeSingleSchedule(const List<Operation>* list, const Schedule::AlgorithmType fitType,
-							const int amountRooms, const int* timeSpan, const int timeSpanLength, 
-							int& testNr, const string fileName) {
+	const int amountRooms, const int* timeSpan, const int timeSpanLength,
+	int& testNr, const string fileName) {
 	string fitTypeStr = "";
 
 	switch (fitType) {
@@ -463,8 +494,8 @@ Schedule makeSingleSchedule(const List<Operation>* list, const Schedule::Algorit
 *  makeDoubleScheduleHeap: Creates a single day schedule and outputs result, based on priority queue elements. Returns the schedule for further use.
 */
 Schedule makeDoubleSchedule(const PriorityQueue<Operation>* que, const int heapType, const Schedule::AlgorithmType fitType,
-							const int amountRooms, const int* timeSpan, const int timeSpanLength,
-							int& testNr, const string fileName) {
+	const int amountRooms, const int* timeSpan, const int timeSpanLength,
+	int& testNr, const string fileName) {
 	string heapTypeStr = "";
 	string fitTypeStr = "";
 
@@ -509,8 +540,8 @@ Schedule makeDoubleSchedule(const PriorityQueue<Operation>* que, const int heapT
 *  makeDoubleScheduleList: Creates a double day schedule and outputs result, based on priority list elements. Returns the schedule for further use.
 */
 Schedule makeDoubleSchedule(const List<Operation>* list, const Schedule::AlgorithmType fitType,
-							const int amountRooms, const int* timeSpan, const int timeSpanLength,
-							int& testNr, const string fileName) {
+	const int amountRooms, const int* timeSpan, const int timeSpanLength,
+	int& testNr, const string fileName) {
 	string fitTypeStr = "";
 
 	switch (fitType) {
