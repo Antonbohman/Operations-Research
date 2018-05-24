@@ -11,8 +11,7 @@ Schedule::Schedule() {
 	rooms = new Bin[amountRooms];
 }
 
-Schedule::Schedule(const PriorityQueue<Operation>& _queue, const int _amountRooms, const int * timeSpan, const int timeSpanLength)
-{
+Schedule::Schedule(const PriorityQueue<Operation>& _queue, const int _amountRooms, const int * timeSpan, const int timeSpanLength) {
 	datatype = DataType::HEAP;
 	totalTime = 0;
 	totalOperation = 0;
@@ -22,15 +21,13 @@ Schedule::Schedule(const PriorityQueue<Operation>& _queue, const int _amountRoom
 	queue = _queue;
 	amountRooms = _amountRooms;
 	rooms = new Bin[amountRooms];
-	for (int i = 0; i < amountRooms; i++)
-	{
+	for (int i = 0; i < amountRooms; i++) {
 		rooms[i].resize(timeSpan[i%timeSpanLength]);
 		avaibleTime += timeSpan[i%timeSpanLength];
 	}
 }
 
-Schedule::Schedule(const List<Operation>& _list, const int _amountRooms, const int * timeSpan, const int timeSpanLength)
-{
+Schedule::Schedule(const List<Operation>& _list, const int _amountRooms, const int * timeSpan, const int timeSpanLength) {
 	datatype = DataType::LIST;
 	totalTime = 0;
 	totalOperation = 0;
@@ -40,15 +37,13 @@ Schedule::Schedule(const List<Operation>& _list, const int _amountRooms, const i
 	list = _list;
 	amountRooms = _amountRooms;
 	rooms = new Bin[amountRooms];
-	for (int i = 0; i < amountRooms; i++)
-	{
+	for (int i = 0; i < amountRooms; i++) {
 		rooms[i].resize(timeSpan[i%timeSpanLength]);
 		avaibleTime += timeSpan[i%timeSpanLength];
 	}
 }
 
-Schedule::Schedule(const Schedule & origin)
-{
+Schedule::Schedule(const Schedule & origin) {
 	datatype = origin.datatype;
 	totalTime = origin.totalTime;
 	totalOperation = origin.totalOperation;
@@ -59,8 +54,7 @@ Schedule::Schedule(const Schedule & origin)
 	list = origin.list;
 	amountRooms = origin.amountRooms;
 	rooms = new Bin[amountRooms];
-	for (int i = 0; i < amountRooms; i++)
-	{
+	for (int i = 0; i < amountRooms; i++) {
 		rooms[i] = Bin(origin.rooms[i]);
 	}
 }
@@ -87,19 +81,19 @@ bool Schedule::operator>(const Schedule & origin) {
 
 void Schedule::fillBins(AlgorithmType type) {
 	switch (type) {
-		case AlgorithmType::NEXT_FIT:
-			nextFit();
-			break;
-		case AlgorithmType::FIRST_FIT:
-			firstFit();
-			break;
-		case AlgorithmType::BEST_FIT:
-			bestFit();
-			break;
-		case AlgorithmType::NO_FIT:
-		default:
-			//nothing happends....
-			break;
+	case AlgorithmType::NEXT_FIT:
+		nextFit();
+		break;
+	case AlgorithmType::FIRST_FIT:
+		firstFit();
+		break;
+	case AlgorithmType::BEST_FIT:
+		bestFit();
+		break;
+	case AlgorithmType::NO_FIT:
+	default:
+		//nothing happends....
+		break;
 	}
 }
 
@@ -119,13 +113,13 @@ void Schedule::printSchedule(const int start, const int end) const {
 		for (int i = 0; i < end - start; i++) {
 			scale = (1 - ((float)rooms[i].remainingSize() / rooms[i].maxSize())) * length;
 
-			cout << "Room " << (i + 1) << (i+1 > 9 ? "":" ") << " |";
+			cout << "Room " << (i + 1) << (i + 1 > 9 ? "" : " ") << " |";
 			SetConsoleTextAttribute(hstdout, 0x03);
 			for (int x = 0; x < length; x++) {
 				cout << (scale > x ? (char)254u : (char)NULL);
 			}
 			SetConsoleTextAttribute(hstdout, csbi.wAttributes);
-			cout << "| " << to_string((int)round((scale/length)*100)) << "% " << intToTime(rooms[i].remainingSize()) << "/" << intToTime(rooms[i].maxSize()) << endl;
+			cout << "| " << to_string((int)round((scale / length) * 100)) << "% " << intToTime(rooms[i].remainingSize()) << "/" << intToTime(rooms[i].maxSize()) << endl;
 
 			schedule = rooms[i].collectOperations();
 			cout << "\t ";
@@ -143,15 +137,14 @@ void Schedule::printSchedule(const int start, const int end) const {
 void Schedule::printEffectivity() const {
 	float effectiveTime = (float)(((float)bookedTime / avaibleTime) * 100);
 	cout << endl << "Effective Time: " << intToTime(bookedTime) << "/" << intToTime(avaibleTime) << " " << to_string(effectiveTime) << "% " << endl;
-	cout << "Remaining Time: " << intToTime(totalTime-bookedTime) << endl << endl;
-	cout << "Operations: " << bookedOperation << "/" << totalOperation << " | Remaining: " << totalOperation-bookedOperation << endl << endl;
+	cout << "Remaining Time: " << intToTime(totalTime - bookedTime) << endl << endl;
+	cout << "Operations: " << bookedOperation << "/" << totalOperation << " | Remaining: " << totalOperation - bookedOperation << endl << endl;
 	cout << "Time to process algorithm: " << to_string(((float)processTime) / MICRO_PER_SEC) << " sec" << endl << endl;
 	cout << endl << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
 }
 
-float Schedule::getEffectivity()
-{
-	return ((float)bookedTime/ avaibleTime);
+float Schedule::getEffectivity() {
+	return ((float)bookedTime / avaibleTime);
 }
 
 Schedule & Schedule::operator=(const Schedule & origin) {
@@ -188,8 +181,7 @@ string Schedule::intToTime(const int time) const {
 	return hour + "h" + min + "m";
 }
 
-void Schedule::nextFit()
-{
+void Schedule::nextFit() {
 	Operation curr;
 
 	int currentRoom = 0;
@@ -223,8 +215,7 @@ void Schedule::nextFit()
 	processTime = chrono::duration_cast<chrono::microseconds>(end - start).count();
 }
 
-void Schedule::firstFit()
-{
+void Schedule::firstFit() {
 	Operation curr;
 
 	totalTime = 0;
@@ -281,8 +272,7 @@ void Schedule::firstFit()
 	processTime = chrono::duration_cast<chrono::microseconds>(end - start).count();
 }
 
-void Schedule::bestFit()
-{
+void Schedule::bestFit() {
 	Operation curr;
 
 	totalTime = 0;
@@ -294,7 +284,7 @@ void Schedule::bestFit()
 
 	int index = 0;
 	int length = list.length();
-	
+
 	while ((datatype == DataType::HEAP ? !queue.isEmpty() : index < length)) {
 		curr = (datatype == DataType::HEAP ? queue.dequeue() : list.getAt(index++));
 		totalTime += curr.getTime();
