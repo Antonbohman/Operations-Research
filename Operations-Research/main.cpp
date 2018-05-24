@@ -65,6 +65,7 @@ int main() {
 	cin >> option;
 
 	switch (option) {
+		/* Test case for finding the best schedule creation with 3 different sorted datastreams*/
 		case 1:
 			fileName = "Operationer_1a.txt";
 
@@ -91,6 +92,7 @@ int main() {
 				storedSchedule.printEffectivity();
 			}
 			break;
+		/* Test case for testing all 3 algorithms with 3 different sorted datastream for one day schedule (a total of 9 test for same data) */
 		case 2:
 			fileName = "Operationer_1a.txt";
 
@@ -114,6 +116,7 @@ int main() {
 				makeSingleSchedule(&list, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
 			}
 			break;
+		/* Same test case as case 2 but with greater amount of data (heavy duty test) */
 		case 3:
 			fileName = "Operationer_3.txt";
 
@@ -137,6 +140,7 @@ int main() {
 				makeSingleSchedule(&list, Schedule::BEST_FIT, 3, singleDay, 1, testNr, fileName);
 			}
 			break;
+		/* Test case with same algorithm but with different datastreams */
 		case 4:
 			fileName = "Operationer_1a.txt";
 
@@ -151,14 +155,14 @@ int main() {
 			fileName = "Operationer_1b.txt";
 
 			if (readFromFile(fileName, &max_queue) &&
-				readFromFile(fileName, &min_queue) &&
-				readFromFile(fileName, &list)) {
+				readFromFile(fileName, &min_queue)) {
 
 				//FIRST FIT
 				makeSingleSchedule(&max_queue, MAX_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
 				makeSingleSchedule(&min_queue, MIN_HEAP, Schedule::FIRST_FIT, 3, singleDay, 1, testNr, fileName);
 			}
 			break;
+		/* Test case with a double day schedule */
 		case 5:
 			fileName = "Operationer_2.txt";
 
@@ -172,6 +176,7 @@ int main() {
 				makeDoubleSchedule(&list, Schedule::FIRST_FIT, 6, doubleDay, 3, testNr, fileName);
 			}
 			break;
+		/* Test case with high amount of data on several rooms(16) */
 		case 6:
 			fileName = "Operationer_3.txt";
 

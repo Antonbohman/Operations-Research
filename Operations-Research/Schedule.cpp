@@ -200,12 +200,15 @@ void Schedule::nextFit()
 	bookedOperation = 0;
 
 	chrono::steady_clock::time_point start = chrono::steady_clock::now();
+
 	int index = 0;
 	int length = list.length();
+
 	while ((datatype == DataType::HEAP ? !queue.isEmpty() : index < length)) {
 		curr = (datatype == DataType::HEAP ? queue.dequeue() : list.getAt(index++));
 		totalTime += curr.getTime();
 		totalOperation++;
+
 		for (int i = currentRoom; i < amountRooms; i++) {
 			currentRoom = i;
 			if (rooms[i].addOperation(curr)) {
@@ -215,6 +218,7 @@ void Schedule::nextFit()
 			}
 		}
 	}
+
 	chrono::steady_clock::time_point end = chrono::steady_clock::now();
 	processTime = chrono::duration_cast<chrono::microseconds>(end - start).count();
 }
@@ -256,12 +260,15 @@ void Schedule::firstFit()
 	//processTime = chrono::duration_cast<chrono::microseconds>(end - start).count();
 
 	chrono::steady_clock::time_point start = chrono::steady_clock::now();
+
 	int index = 0;
 	int length = list.length();
+
 	while ((datatype == DataType::HEAP ? !queue.isEmpty() : index < length)) {
 		curr = (datatype == DataType::HEAP ? queue.dequeue() : list.getAt(index++));
 		totalTime += curr.getTime();
 		totalOperation++;
+
 		for (int i = 0; i < amountRooms; i++) {
 			if (rooms[i].addOperation(curr)) {//Lägger till om kan. Lägger max in 1 för alla 3 bins.
 				i = amountRooms;	//break
@@ -284,9 +291,10 @@ void Schedule::bestFit()
 	bookedOperation = 0;
 
 	chrono::steady_clock::time_point start = chrono::steady_clock::now();
-	//best fit decreasing
+
 	int index = 0;
 	int length = list.length();
+	
 	while ((datatype == DataType::HEAP ? !queue.isEmpty() : index < length)) {
 		curr = (datatype == DataType::HEAP ? queue.dequeue() : list.getAt(index++));
 		totalTime += curr.getTime();
@@ -303,6 +311,7 @@ void Schedule::bestFit()
 				minValue = tempValue;
 			}
 		}
+
 		if (minIndex != -1) {
 			rooms[minIndex].addOperation(curr);
 			bookedTime += curr.getTime();
