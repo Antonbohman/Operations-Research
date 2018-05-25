@@ -37,6 +37,8 @@ Schedule makeDoubleSchedule(const List<Operation>* list, const Schedule::Algorit
 *  main: Starting point
 */
 int main() {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
 	srand(time(NULL));
 	PriorityQueue<Operation> max_queue(MAX_HEAP);
 	PriorityQueue<Operation> min_queue(MIN_HEAP);
