@@ -2,7 +2,7 @@
 #include <string>
 #include <fstream>
 #include <windows.h>
-
+#include <crtdbg.h>
 #include "PriorityQueue.h"
 #include "List.h"
 #include "Schedule.h"
