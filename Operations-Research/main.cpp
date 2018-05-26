@@ -61,7 +61,7 @@ int main() {
 	cout << "4: Same method but on different operations." << endl;
 	cout << "5: Two days schedule split on same operations" << endl;
 	cout << "6: High amount of data on many rooms." << endl;
-	cout << "7: Randomize the data input order 1000 times, and try to find a better schedule for each randomizing." << endl;
+	cout << "7: Randomize the data input order 100 times, and try to find a better schedule for each randomizing." << endl;
 	cout << "Input: ";
 
 	cin >> option;
@@ -199,7 +199,7 @@ int main() {
 			string("Operationer_1b.txt")
 		};
 
-		int tries = 1000;
+		int tries = 100;
 		int rooms = 3;
 
 		TCHAR c;
