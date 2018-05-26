@@ -9,8 +9,6 @@ Bin::Bin(const Bin & origin) {
 	schedule = origin.schedule;
 }
 
-
-
 Bin::~Bin() {
 }
 
@@ -68,7 +66,9 @@ bool Bin::resize(const int _size) {
 }
 
 Bin & Bin::operator=(const Bin & origin) {
-	size = origin.size;
-	schedule = origin.schedule;
+	if (this != &origin) {
+		size = origin.size;
+		schedule = origin.schedule;
+	}
 	return *this;
 }

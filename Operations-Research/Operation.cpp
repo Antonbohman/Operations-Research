@@ -40,9 +40,11 @@ int Operation::getTime() const {
 }
 
 Operation & Operation::operator=(const Operation & origin) {
-	id = origin.id;
-	type = origin.type;
-	time = origin.time;
+	if (this != &origin) {
+		id = origin.id;
+		type = origin.type;
+		time = origin.time;
+	}
 
 	return *this;
 }

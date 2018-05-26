@@ -68,19 +68,19 @@ Schedule::~Schedule() {
 }
 
 bool Schedule::operator==(const Schedule & origin) {
-	return ((float)bookedTime / avaibleTime) == ((float)origin.bookedTime / origin.avaibleTime);
+	return ((float)bookedTime / (avaibleTime == 0 ? 1 : avaibleTime)) == ((float)origin.bookedTime / (origin.avaibleTime == 0 ? 1 : origin.avaibleTime));
 }
 
 bool Schedule::operator!=(const Schedule & origin) {
-	return ((float)bookedTime / avaibleTime) != ((float)origin.bookedTime / origin.avaibleTime);
+	return ((float)bookedTime / (avaibleTime == 0 ? 1 : avaibleTime)) != ((float)origin.bookedTime / (origin.avaibleTime == 0 ? 1 : origin.avaibleTime));
 }
 
 bool Schedule::operator<(const Schedule & origin) {
-	return ((float)bookedTime / avaibleTime) < ((float)origin.bookedTime / origin.avaibleTime);
+	return ((float)bookedTime / (avaibleTime == 0 ? 1 : avaibleTime)) < ((float)origin.bookedTime / (origin.avaibleTime == 0 ? 1 : origin.avaibleTime));
 }
 
 bool Schedule::operator>(const Schedule & origin) {
-	return ((float)bookedTime / avaibleTime) > ((float)origin.bookedTime / origin.avaibleTime);
+	return ((float)bookedTime / (avaibleTime == 0 ? 1 : avaibleTime)) > ((float)origin.bookedTime / (origin.avaibleTime == 0 ? 1 : origin.avaibleTime));
 }
 
 void Schedule::fillBins(AlgorithmType type) {
@@ -227,33 +227,6 @@ void Schedule::firstFit() {
 	totalOperation = 0;
 	bookedTime = 0;
 	bookedOperation = 0;
-
-	//int index = 0;
-	//int length = list.length();
-	////operations to ordinary list, faster algorithm
-	//Operation* arr = new Operation[length];
-	//for (int i = 0; i < length; i++)
-	//{
-	//	if (datatype == DataType::HEAP) arr[i] = queue.dequeue();
-	//	else arr[i] = list.getAt(i);
-	//}
-	//chrono::steady_clock::time_point start = chrono::steady_clock::now();
-	////algorithm
-	//for(int i = 0; i < length; i++){
-	//	curr = arr[i];
-	//	totalTime += curr.getTime();
-	//	totalOperation++;
-	//	for (int i = 0; i < amountRooms; i++) {
-	//		if (rooms[i].addOperation(curr)) {
-	//			i = amountRooms;	//break
-	//			bookedTime += curr.getTime();
-	//			bookedOperation++;
-	//		}
-	//	}
-	//}
-	//delete[] arr;
-	//chrono::steady_clock::time_point end = chrono::steady_clock::now();
-	//processTime = chrono::duration_cast<chrono::microseconds>(end - start).count();
 
 	chrono::steady_clock::time_point start = chrono::steady_clock::now();
 
